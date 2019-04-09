@@ -5,6 +5,8 @@ namespace Itineris\WPHubSpotImporter;
 
 use Itineris\WPHubSpotImporter\Admin\SettingsPage;
 use Itineris\WPHubSpotImporter\API\OAuth2;
+use Itineris\WPHubSpotImporter\Commands\Verify;
+use WP_CLI;
 
 class Plugin
 {
@@ -14,8 +16,6 @@ class Plugin
             'oauth2' => $oauth2,
             'settingPage' => $settingPage,
         ] = Factory::build();
-
-        // TODO: Throw error when constants not set!
 
         /** @var SettingsPage $settingPage */
         add_action('admin_menu', function () use ($settingPage): void {
@@ -36,5 +36,10 @@ class Plugin
                 $oauth2->handleAuthenticationCallback();
             }
         });
+    }
+
+    public static function registerCommands(): void
+    {
+        WP_CLI::add_command('hubspot:verify', [Verify::class, '__invoke']);
     }
 }

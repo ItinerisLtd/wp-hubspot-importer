@@ -25,3 +25,7 @@ if (file_exists(__DIR__ . '/vendor/autoload.php')) {
 }
 
 Plugin::run();
+
+if (defined('WP_CLI') && WP_CLI) {
+    Plugin::registerCommands();
+}

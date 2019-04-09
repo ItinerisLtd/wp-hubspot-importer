@@ -4,15 +4,16 @@ declare(strict_types=1);
 namespace Itineris\WPHubSpotImporter\API;
 
 use Itineris\WPHubSpotImporter\Admin\SettingsPage;
+use SevenShores\Hubspot\Http\Response;
 use SevenShores\Hubspot\Resources\OAuth2 as HubSpotOauth2;
 use TypistTech\WPOptionStore\OptionStoreInterface;
 
 class OAuth2
 {
-    protected const SCOPES = [
+    public const SCOPES = [
         'content',
     ];
-
+    protected const NONCE_ACTION = 'wp-hubspot-importer-authentication';
     /** @var OptionStoreInterface */
     protected $optionStore;
     /** @var HubSpotOauth2 */
@@ -32,8 +33,6 @@ class OAuth2
             static::SCOPES
         );
     }
-
-    protected const NONCE_ACTION = 'wp-hubspot-importer-authentication';
 
     protected function getAuthenticationCallbackUrl(): string
     {
@@ -67,29 +66,68 @@ class OAuth2
             wp_die('Authentication code not found');
         }
 
-        $tokens = $this->oauth2->getTokensByCode(
+        $response = $this->oauth2->getTokensByCode(
             $this->optionStore->getString('wp_hubspot_importer_client_id'),
             $this->optionStore->getString('wp_hubspot_importer_client_secret'),
             $this->getAuthenticationCallbackUrl(),
             $code
         );
+        if (200 !== $response->getStatusCode()) {
+            wp_die('Unable to get access token');
+        }
+
+        $data = $response->getData();
 
         update_option(
             'wp_hubspot_importer_refresh_token',
-            sanitize_text_field($tokens->data->refresh_token)
+            sanitize_text_field($data->refresh_token)
         );
         update_option(
             'wp_hubspot_importer_access_token',
-            sanitize_text_field($tokens->data->access_token)
+            sanitize_text_field($data->access_token)
         );
         update_option(
             'wp_hubspot_importer_access_token_expire_at',
-            time() + absint($tokens->data->expires_in)
+            time() + absint($data->expires_in)
         );
 
         wp_safe_redirect(
             SettingsPage::getUrl()
         );
         exit;
+    }
+
+    public function refreshAccessToken(): void
+    {
+        $response = $this->oauth2->getTokensByRefresh(
+            $this->optionStore->getString('wp_hubspot_importer_client_id'),
+            $this->optionStore->getString('wp_hubspot_importer_client_secret'),
+            $this->optionStore->getString('wp_hubspot_importer_refresh_token')
+        );
+        if (200 !== $response->getStatusCode()) {
+            wp_die('Unable to refresh access token');
+        }
+
+        $data = $response->getData();
+
+        update_option(
+            'wp_hubspot_importer_refresh_token',
+            sanitize_text_field($data->refresh_token)
+        );
+        update_option(
+            'wp_hubspot_importer_access_token',
+            sanitize_text_field($data->access_token)
+        );
+        update_option(
+            'wp_hubspot_importer_access_token_expire_at',
+            time() + absint($data->expires_in)
+        );
+    }
+
+    public function getRefreshTokenInfo(): Response
+    {
+        return $this->oauth2->getRefreshTokenInfo(
+            $this->optionStore->getString('wp_hubspot_importer_refresh_token')
+        );
     }
 }

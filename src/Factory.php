@@ -17,16 +17,17 @@ class Factory
     {
         $optionStore = OptionStoreFactory::build();
 
-        $oauth2 = static::makeOAuth2($optionStore);
-        $settingPage = static::makeSettingsPage($optionStore, $oauth2);
+        $oauth2 = static::buildOAuth2($optionStore);
+        $settingPage = static::buildSettingsPage($optionStore, $oauth2);
 
         return [
             'oauth2' => $oauth2,
             'settingPage' => $settingPage,
+            'optionStore' => $optionStore,
         ];
     }
 
-    protected static function makeOAuth2(OptionStoreInterface $optionStore): OAuth2
+    protected static function buildOAuth2(OptionStoreInterface $optionStore): OAuth2
     {
         $client = new Client([
             'key' => $optionStore->getString('wp_hubspot_importer_client_secret'),
@@ -36,7 +37,7 @@ class Factory
         return new OAuth2($optionStore, $oauth2);
     }
 
-    protected static function makeSettingsPage(OptionStoreInterface $optionStore, OAuth2 $oauth2): SettingsPage
+    protected static function buildSettingsPage(OptionStoreInterface $optionStore, OAuth2 $oauth2): SettingsPage
     {
         $view = ViewFactory::build(__DIR__ . '/Admin/view/settings-page.php');
 

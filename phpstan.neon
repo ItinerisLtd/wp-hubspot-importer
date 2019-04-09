@@ -16,6 +16,7 @@ parameters:
         - %rootDir%/../../../wordpress/wp-includes/l10n.php
         - %rootDir%/../../../wordpress/wp-includes/class-wp-walker.php
         - %rootDir%/../../../wordpress/wp-admin/includes/template.php
+        - %rootDir%/../../../vendor/wp-cli/wp-cli/php/class-wp-cli.php
 
     ignoreErrors:
         - '#Cannot cast SevenShores\\Hubspot\\Http\\Response to string#'

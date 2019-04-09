@@ -25,6 +25,11 @@ class SettingsPage
         $this->oauth2 = $oauth2;
     }
 
+    public static function getUrl(): string
+    {
+        return admin_url('/tools.php?page=' . static::SLUG);
+    }
+
     public function addManagementPage(): void
     {
         add_management_page(
@@ -42,10 +47,5 @@ class SettingsPage
                 ]);
             }
         );
-    }
-
-    public static function getUrl(): string
-    {
-        return admin_url('/tools.php?page=' . static::SLUG);
     }
 }
