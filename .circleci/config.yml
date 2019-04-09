@@ -1,0 +1,26 @@
+version: 2.1
+
+orbs:
+  composer: itinerisltd/composer@0
+
+workflows:
+  test:
+    jobs:
+      - composer/install:
+          name: style-check
+          post-steps:
+            - composer/exec:
+                command: style:check
+
+      - composer/install:
+          name: style-check
+          executor: composer/seven_two
+          post-steps:
+            - composer/exec:
+                command: style:check
+
+      - composer/install:
+          name: phpstan-analyse
+          post-steps:
+            - composer/exec:
+                command: phpstan:analyse
