@@ -29,7 +29,7 @@ class Factory
     protected static function makeOAuth2(OptionStoreInterface $optionStore): OAuth2
     {
         $client = new Client([
-            'key' => $optionStore->getString('wp_hubspot_importer_client_secret')
+            'key' => $optionStore->getString('wp_hubspot_importer_client_secret'),
         ]);
         $oauth2 = new HubSpotOauth2($client);
 

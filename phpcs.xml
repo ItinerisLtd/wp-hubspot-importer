@@ -31,4 +31,14 @@
     <rule ref="Squiz.Commenting.FileComment.MissingPackageTag">
         <exclude-pattern>/wp-hubspot-importer.php</exclude-pattern>
     </rule>
+
+    <!-- This is because this rule gives internal error Undefined index: parenthesis_owner -->
+    <rule ref="WordPress.WhiteSpace.ControlStructureSpacing">
+        <exclude-pattern>/src/Plugin.php</exclude-pattern>
+    </rule>
+
+    <!-- This is because wpcs/phpcs not support closure yet -->
+    <rule ref="WordPressVIPMinimum.Variables.VariableAnalysis.UndefinedVariable">
+        <exclude-pattern>/src/Plugin.php</exclude-pattern>
+    </rule>
 </ruleset>

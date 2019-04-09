@@ -5,8 +5,8 @@
 /* export-ignore
 
 # Export white-listed production code only.
-/src            -export-ignore
-/*.php          -export-ignore
-/composer.*     -export-ignore
-/LICENSE        -export-ignore
-/README.md      -export-ignore
+/src                        -export-ignore
+/wp-hubspot-importer.php    -export-ignore
+/composer.*                 -export-ignore
+/LICENSE                    -export-ignore
+/README.md                  -export-ignore

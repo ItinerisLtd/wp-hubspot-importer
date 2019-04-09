@@ -5,12 +5,11 @@ echo '<div class="wrap">';
 settings_errors();
 echo '<h1>' . esc_html(get_admin_page_title()) . '</h1>';
 
-
 printf(
     '<a href="$1%s">Click Me</a>',
     esc_url($context->authenticationUrl)
 );
 
-echo '<h2>hasAccessToken: ' . $context->hasRefreshToken . '</h2>';
+echo '<h2>hasAccessToken: ' . esc_html($context->hasRefreshToken) . '</h2>';
 
 echo '</div>';

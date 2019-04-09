@@ -6,10 +6,21 @@ parameters:
         - %rootDir%/../../../wordpress
 
     autoload_files:
+        - %rootDir%/../../../phpstan-bootstrap.php
+        - %rootDir%/../../../wordpress/wp-includes/functions.php
+        - %rootDir%/../../../wordpress/wp-includes/formatting.php
+        - %rootDir%/../../../wordpress/wp-includes/pluggable.php
         - %rootDir%/../../../wordpress/wp-includes/plugin.php
+        - %rootDir%/../../../wordpress/wp-admin/includes/plugin.php
+        - %rootDir%/../../../wordpress/wp-includes/link-template.php
+        - %rootDir%/../../../wordpress/wp-includes/l10n.php
+        - %rootDir%/../../../wordpress/wp-includes/class-wp-walker.php
+        - %rootDir%/../../../wordpress/wp-admin/includes/template.php
 
-#    ignoreErrors:
-#        - '#Construct empty\(\) is not allowed. Use more strict comparison.#'
+    ignoreErrors:
+        - '#Cannot cast SevenShores\\Hubspot\\Http\\Response to string#'
+        - '#Undefined variable: \$context#'
+        - '#Parameter \#1 $str of function sanitize_text_field expects string, array|string given.#'
 
 includes:
     - vendor/phpstan/phpstan-strict-rules/rules.neon

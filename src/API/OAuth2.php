@@ -33,21 +33,38 @@ class OAuth2
         );
     }
 
+    protected const NONCE_ACTION = 'wp-hubspot-importer-authentication';
+
     protected function getAuthenticationCallbackUrl(): string
     {
+        $nonceUrl = wp_nonce_url(site_url(), static::NONCE_ACTION);
+
         return add_query_arg(
             'wp-hubspot-importer-action',
             'authentication-callback',
-            site_url()
+            $nonceUrl
         );
     }
 
     public function handleAuthenticationCallback(): void
     {
-        $code = null;
+        $nonce = '';
         // TODO: Handle else!
-        if (isset($_GET['code'])) {
-            $code = sanitize_text_field(wp_unslash($_GET['code']));
+        if (isset($_GET['_wpnonce'])) { // WPCS: Input var okay.
+            $nonce = sanitize_key($_GET['_wpnonce']); // WPCS: Input var okay.
+        }
+
+        $nonceVerificationResult = wp_verify_nonce($nonce, static::NONCE_ACTION);
+        if (! is_int($nonceVerificationResult) || $nonceVerificationResult < 1) {
+            wp_die('This link has been expired.');
+        }
+
+        $code = '';
+        if (isset($_GET['code'])) { // WPCS: Input var okay.
+            $code = sanitize_text_field(wp_unslash($_GET['code'])); // WPCS: Input var okay.
+        }
+        if ('' === $code) {
+            wp_die('Authentication code not found');
         }
 
         $tokens = $this->oauth2->getTokensByCode(
