@@ -37,6 +37,7 @@ class SettingsPage
             __('WP HubSpot Importer', 'wp-hubspot-importer'),
             'manage_options',
             static::SLUG,
+            // TODO: Update wp-kses-view to return closure.
             function (): void {
                 // phpcs:ignore WordPressVIPMinimum.Variables.VariableAnalysis.UndefinedVariable
                 $this->view->render((object) [

@@ -22,13 +22,14 @@ class Factory
 
         return [
             'oauth2' => $oauth2,
-            'settingPage' => $settingPage,
             'optionStore' => $optionStore,
+            'settingPage' => $settingPage,
         ];
     }
 
     protected static function buildOAuth2(OptionStoreInterface $optionStore): OAuth2
     {
+        // TODO: Add `http_error = false` to client!
         $client = new Client([
             'key' => $optionStore->getString('wp_hubspot_importer_client_secret'),
         ]);
