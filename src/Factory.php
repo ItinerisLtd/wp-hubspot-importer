@@ -64,7 +64,6 @@ class Factory
             $oauth2->refreshAccessToken();
         }
         // TODO: Check access token valid.
-
         return new HubSpotFactory(
             [
                 'key' => $optionStore->getString('wp_hubspot_importer_access_token'),

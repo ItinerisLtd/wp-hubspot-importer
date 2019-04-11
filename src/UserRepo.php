@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace Itineris\WPHubSpotImporter;
 
-
 use RuntimeException;
 use WP_Error;
 use WP_User;
