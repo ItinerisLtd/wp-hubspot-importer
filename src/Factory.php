@@ -28,10 +28,15 @@ class Factory
 
     protected static function buildOAuth2(OptionStoreInterface $optionStore): OAuth2
     {
-        // TODO: Add `http_error = false` to client!
-        $client = new Client([
-            'key' => $optionStore->getString('wp_hubspot_importer_client_secret'),
-        ]);
+        $client = new Client(
+            [
+                'key' => $optionStore->getString('wp_hubspot_importer_client_secret'),
+            ],
+            null,
+            [
+                'http_errors' => false,
+            ]
+        );
         $oauth2 = new HubSpotOauth2($client);
 
         return new OAuth2($optionStore, $oauth2);
