@@ -66,9 +66,6 @@ class BlogPost
         return $postId > 0;
     }
 
-    /**
-     * @return static::DO_NOTHING|static::CREATE_POST|static::UPDATE_POST|static::DELETE_POST
-     */
     protected function whatToDo(): int
     {
         $isPublished = 'PUBLISHED' === sanitize_text_field($this->original->state);
@@ -138,6 +135,12 @@ class BlogPost
                 static::HUBSPOT_FEATURED_IMAGE_URL_META_KEY => $this->getFeaturedImageUrl(),
             ],
         ]);
+
+        if ($postId instanceof WP_Error) {
+            throw new RuntimeException(
+                $postId->get_error_message()
+            );
+        }
 
         wp_set_post_terms($postId,
             $this->getTopics(),
@@ -214,7 +217,7 @@ class BlogPost
             );
         }
 
-        return get_user_by('id', $userId);
+        return new WP_User($userId);
     }
 
     protected function getFeaturedImageUrl(): string

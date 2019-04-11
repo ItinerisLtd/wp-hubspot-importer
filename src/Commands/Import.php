@@ -35,7 +35,7 @@ class Import
         // TODO: Check access token valid.
         $factory = new HubSpotFactory(
             [
-                'key' => $optionStore->getString('wp_hubspot_importer_access_token'),
+                'key' => $optionStore->getString('wp_hubspot_importer_access_token') . 'ssss',
                 'oauth2' => true,
             ],
             null,
@@ -80,8 +80,11 @@ class Import
         ]);
 
         if (200 !== $response->getStatusCode()) {
+
+            $data = $response->getData();
+
             WP_CLI::error('Failed to fetch HubSpot blog posts', false);
-            WP_CLI::error($response->errorType . ': ' . $response->message);
+            WP_CLI::error(($data->errorType ?? 'Unknown error type') . ': ' . ($data->message ?? 'Unknown error message'));
         }
 
         $data = $response->getData();
