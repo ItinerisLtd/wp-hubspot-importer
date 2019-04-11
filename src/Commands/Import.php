@@ -3,9 +3,9 @@ declare(strict_types=1);
 
 namespace Itineris\WPHubSpotImporter\Commands;
 
-use Itineris\WPHubSpotImporter\API\OAuth2;
 use Itineris\WPHubSpotImporter\BlogPost;
 use Itineris\WPHubSpotImporter\Factory;
+use Itineris\WPHubSpotImporter\OAuth2;
 use SevenShores\Hubspot\Factory as HubSpotFactory;
 use SevenShores\Hubspot\Resources\BlogPosts;
 use stdClass;
@@ -14,6 +14,8 @@ use WP_CLI;
 
 class Import
 {
+    protected const LIMIT = 20;
+
     public function __invoke(): void
     {
         WP_CLI::log('Importing from HubSpot...');
@@ -66,8 +68,6 @@ class Import
         // TODO: update timestamp.
         // TODO: update tags info.
     }
-
-    protected const LIMIT = 1;
 
     protected function importSingleBatch(BlogPosts $blogPosts, int $lastImportedAt, int $batchIndex): array
     {

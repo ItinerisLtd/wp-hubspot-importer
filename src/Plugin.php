@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace Itineris\WPHubSpotImporter;
 
 use Itineris\WPHubSpotImporter\Admin\SettingsPage;
-use Itineris\WPHubSpotImporter\API\OAuth2;
 use Itineris\WPHubSpotImporter\Commands\Import;
 use Itineris\WPHubSpotImporter\Commands\Verify;
 use WP_CLI;
@@ -19,15 +18,13 @@ class Plugin
         ] = Factory::build();
 
         /** @var SettingsPage $settingPage */
-        add_action('admin_menu', function () use ($settingPage): void {
-            $settingPage->addManagementPage();
-        });
+        add_action('admin_menu', [$settingPage, 'addManagementPage']);
 
         /** @var OAuth2 $oauth2 */
-        // TODO: Refactor!
         add_action('wp', function () use ($oauth2): void {
             $action = null;
 
+            // TODO: Refactor!
             if (isset($_GET['wp-hubspot-importer-action'])) { // WPCS: Input var ok.
                 $action = sanitize_text_field(
                     wp_unslash($_GET['wp-hubspot-importer-action'])

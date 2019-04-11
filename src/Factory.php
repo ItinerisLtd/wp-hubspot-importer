@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace Itineris\WPHubSpotImporter;
 
 use Itineris\WPHubSpotImporter\Admin\SettingsPage;
-use Itineris\WPHubSpotImporter\API\OAuth2;
 use SevenShores\Hubspot\Http\Client;
 use SevenShores\Hubspot\Resources\OAuth2 as HubSpotOauth2;
 use TypistTech\WPKsesView\Factory as ViewFactory;
@@ -29,10 +28,15 @@ class Factory
 
     protected static function buildOAuth2(OptionStoreInterface $optionStore): OAuth2
     {
-        // TODO: Add `http_error = false` to client!
-        $client = new Client([
-            'key' => $optionStore->getString('wp_hubspot_importer_client_secret'),
-        ]);
+        $client = new Client(
+            [
+                'key' => $optionStore->getString('wp_hubspot_importer_client_secret'),
+            ],
+            null,
+            [
+                'http_errors' => false,
+            ]
+        );
         $oauth2 = new HubSpotOauth2($client);
 
         return new OAuth2($optionStore, $oauth2);

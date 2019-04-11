@@ -47,12 +47,9 @@ class BlogPost
                 $this->deletePost();
                 break;
         }
-    }
 
-    protected function isPreviouslyImported(): bool
-    {
-        $postId = $this->getPostId();
-        return $postId > 0;
+        // TODO.
+        WP_CLI::success('Imported: ' . $this->getHubSpotBlogPostId());
     }
 
     protected function whatToDo(): int
@@ -68,6 +65,12 @@ class BlogPost
         return $this->isPreviouslyImported()
             ? static::DELETE_POST
             : static::DO_NOTHING;
+    }
+
+    protected function isPreviouslyImported(): bool
+    {
+        $postId = $this->getPostId();
+        return $postId > 0;
     }
 
     protected function getPostId(): int
@@ -93,6 +96,11 @@ class BlogPost
         }
 
         return $this->postId;
+    }
+
+    protected function getHubSpotBlogPostId(): string
+    {
+        return sanitize_text_field($this->original->id);
     }
 
     /**
@@ -137,42 +145,6 @@ class BlogPost
         );
     }
 
-    protected function getPostContent(): string
-    {
-        return wp_kses_post($this->original->post_body ?? '');
-    }
-
-    protected function getPostExcerpt(): string
-    {
-        return sanitize_text_field($this->original->post_summary ?? '');
-    }
-
-    protected function getPostTitle(): string
-    {
-        return sanitize_text_field($this->original->page_title ?? '');
-    }
-
-    protected function getPostDateGmt(): string
-    {
-        $timestampMilliseconds = (int) ($this->original->publish_date ?? 0);
-        $timestamp = (int) floor($timestampMilliseconds / 1000);
-
-        return gmdate('Y-m-d H:i:s', $timestamp);
-    }
-
-    protected function getPostModifiedGmt(): string
-    {
-        $timestampMilliseconds = (int) ($this->original->updated ?? 0);
-        $timestamp = (int) floor($timestampMilliseconds / 1000);
-
-        return gmdate('Y-m-d H:i:s', $timestamp);
-    }
-
-    protected function getHubSpotBlogPostId(): string
-    {
-        return sanitize_text_field($this->original->id);
-    }
-
     protected function createOrUpdateAuthor(): WP_User
     {
         // TODO: Extract to its own class.
@@ -208,6 +180,29 @@ class BlogPost
         return new WP_User($userId);
     }
 
+    protected function getPostContent(): string
+    {
+        return wp_kses_post($this->original->post_body ?? '');
+    }
+
+    protected function getPostExcerpt(): string
+    {
+        return sanitize_text_field($this->original->post_summary ?? '');
+    }
+
+    protected function getPostTitle(): string
+    {
+        return sanitize_text_field($this->original->page_title ?? '');
+    }
+
+    protected function getPostDateGmt(): string
+    {
+        $timestampMilliseconds = (int) ($this->original->publish_date ?? 0);
+        $timestamp = (int) floor($timestampMilliseconds / 1000);
+
+        return gmdate('Y-m-d H:i:s', $timestamp);
+    }
+
     protected function getFeaturedImageUrl(): string
     {
         return esc_url_raw(
@@ -219,6 +214,15 @@ class BlogPost
         );
     }
 
+    protected function getTopics(): string
+    {
+        $topicIds = array_map(function ($topicId): string {
+            return 'topic_' . sanitize_text_field($topicId);
+        }, $this->original->topic_ids);
+
+        return implode($topicIds, ', ');
+    }
+
     protected function deletePost(): void
     {
         wp_delete_post(
@@ -227,12 +231,11 @@ class BlogPost
         );
     }
 
-    protected function getTopics(): string
+    protected function getPostModifiedGmt(): string
     {
-        $topicIds = array_map(function ($topicId): string {
-            return 'topic_' . sanitize_text_field($topicId);
-        }, $this->original->topic_ids);
+        $timestampMilliseconds = (int) ($this->original->updated ?? 0);
+        $timestamp = (int) floor($timestampMilliseconds / 1000);
 
-        return implode($topicIds, ', ');
+        return gmdate('Y-m-d H:i:s', $timestamp);
     }
 }

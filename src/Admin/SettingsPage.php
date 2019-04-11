@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Itineris\WPHubSpotImporter\Admin;
 
-use Itineris\WPHubSpotImporter\API\OAuth2;
+use Itineris\WPHubSpotImporter\OAuth2;
 use TypistTech\WPKsesView\ViewInterface;
 use TypistTech\WPOptionStore\OptionStoreInterface;
 

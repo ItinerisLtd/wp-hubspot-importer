@@ -3,8 +3,8 @@ declare(strict_types=1);
 
 namespace Itineris\WPHubSpotImporter\Commands;
 
-use Itineris\WPHubSpotImporter\API\OAuth2;
 use Itineris\WPHubSpotImporter\Factory;
+use Itineris\WPHubSpotImporter\OAuth2;
 use TypistTech\WPOptionStore\OptionStoreInterface;
 use WP_CLI;
 

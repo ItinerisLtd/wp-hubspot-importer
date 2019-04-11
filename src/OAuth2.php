@@ -1,22 +1,21 @@
 <?php
 declare(strict_types=1);
 
-namespace Itineris\WPHubSpotImporter\API;
+namespace Itineris\WPHubSpotImporter;
 
 use Itineris\WPHubSpotImporter\Admin\SettingsPage;
 use SevenShores\Hubspot\Http\Response;
 use SevenShores\Hubspot\Resources\OAuth2 as HubSpotOauth2;
+use stdClass;
 use TypistTech\WPOptionStore\OptionStoreInterface;
 
-/**
- * TODO: Move this class 1 level up, i.e: not under API namespace.
- */
 class OAuth2
 {
     public const SCOPES = [
         'content',
     ];
     protected const NONCE_ACTION = 'wp-hubspot-importer-authentication';
+
     /** @var OptionStoreInterface */
     protected $optionStore;
     /** @var HubSpotOauth2 */
@@ -50,21 +49,11 @@ class OAuth2
 
     public function handleAuthenticationCallback(): void
     {
-        $nonce = '';
-        // TODO: Handle else!
-        if (isset($_GET['_wpnonce'])) { // WPCS: Input var okay.
-            $nonce = sanitize_key($_GET['_wpnonce']); // WPCS: Input var okay.
-        }
-
-        $nonceVerificationResult = wp_verify_nonce($nonce, static::NONCE_ACTION);
-        if (! is_int($nonceVerificationResult) || $nonceVerificationResult < 1) {
+        if ($this->isNonceValid()) {
             wp_die('This link has been expired.');
         }
 
-        $code = '';
-        if (isset($_GET['code'])) { // WPCS: Input var okay.
-            $code = sanitize_text_field(wp_unslash($_GET['code'])); // WPCS: Input var okay.
-        }
+        $code = $this->getCodeFromSuperGlobal();
         if ('' === $code) {
             wp_die('Authentication code not found');
         }
@@ -75,12 +64,45 @@ class OAuth2
             $this->getAuthenticationCallbackUrl(),
             $code
         );
+
         if (200 !== $response->getStatusCode()) {
             wp_die('Unable to get access token');
         }
 
-        $data = $response->getData();
+        $this->saveTokensIntoDatabase(
+            $response->getData()
+        );
 
+        wp_safe_redirect(
+            SettingsPage::getUrl()
+        );
+        exit;
+    }
+
+    protected function isNonceValid(): bool
+    {
+        $nonce = '';
+        if (isset($_GET['_wpnonce'])) { // WPCS: Input var okay.
+            $nonce = sanitize_key($_GET['_wpnonce']); // WPCS: Input var okay.
+        }
+
+        $nonceVerificationResult = wp_verify_nonce($nonce, static::NONCE_ACTION);
+
+        return is_int($nonceVerificationResult) && $nonceVerificationResult > 0;
+    }
+
+    protected function getCodeFromSuperGlobal(): string
+    {
+        $code = '';
+        if (isset($_GET['code'])) { // WPCS: Input var okay.
+            $code = sanitize_text_field(wp_unslash($_GET['code'])); // WPCS: Input var okay.
+        }
+
+        return $code;
+    }
+
+    protected function saveTokensIntoDatabase(stdClass $data): void
+    {
         update_option(
             'wp_hubspot_importer_refresh_token',
             sanitize_text_field($data->refresh_token)
@@ -93,11 +115,6 @@ class OAuth2
             'wp_hubspot_importer_access_token_expire_at',
             time() + absint($data->expires_in)
         );
-
-        wp_safe_redirect(
-            SettingsPage::getUrl()
-        );
-        exit;
     }
 
     public function refreshAccessToken(): void
@@ -111,19 +128,8 @@ class OAuth2
             wp_die('Unable to refresh access token');
         }
 
-        $data = $response->getData();
-
-        update_option(
-            'wp_hubspot_importer_refresh_token',
-            sanitize_text_field($data->refresh_token)
-        );
-        update_option(
-            'wp_hubspot_importer_access_token',
-            sanitize_text_field($data->access_token)
-        );
-        update_option(
-            'wp_hubspot_importer_access_token_expire_at',
-            time() + absint($data->expires_in)
+        $this->saveTokensIntoDatabase(
+            $response->getData()
         );
     }
 
