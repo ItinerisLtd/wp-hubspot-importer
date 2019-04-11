@@ -17,6 +17,12 @@ use TypistTech\WPOptionStore\OptionStoreInterface;
  */
 class Factory
 {
+    protected $oAuth2;
+    protected $optionStore;
+    protected $settingsPage;
+    protected $blogPosts;
+    protected $hubSpotFactory;
+
     /**
      * TODO: Refactor this class!
      */
@@ -40,44 +46,50 @@ class Factory
         ];
     }
 
-    /**
-     * TODO: Refactor this class!
-     */
-    public static function build(): array
+    public function getSettingsPage(): SettingsPage
     {
-        $optionStore = OptionStoreFactory::build();
+        if (null === $this->settingsPage) {
+            $this->settingsPage = new SettingsPage(
+                ViewFactory::build(__DIR__ . '/Admin/view/settings-page.php'),
+                $this->getOptionStore(),
+                $this->getOAuth2()
+            );
+        }
 
-        $oauth2 = static::buildOAuth2($optionStore);
-        $settingPage = static::buildSettingsPage($optionStore, $oauth2);
-
-        return [
-            'oauth2' => $oauth2,
-            'optionStore' => $optionStore,
-            'settingPage' => $settingPage,
-        ];
+        return $this->settingsPage;
     }
 
-    protected static function buildOAuth2(OptionStoreInterface $optionStore): OAuth2
+    public function getOAuth2(): OAuth2
     {
-        $client = new Client(
-            [
-                'key' => $optionStore->getString('wp_hubspot_importer_client_secret'),
-            ],
-            null,
-            [
-                'http_errors' => false,
-            ]
-        );
-        $oauth2 = new HubSpotOauth2($client);
+        if (null === $this->oAuth2) {
+            $optionStore = $this->getOptionStore();
 
-        return new OAuth2($optionStore, $oauth2);
+            $client = new Client(
+                [
+                    'key' => $optionStore->getString('wp_hubspot_importer_client_secret'),
+                ],
+                null,
+                [
+                    'http_errors' => false,
+                ]
+            );
+
+            return new OAuth2(
+                $optionStore,
+                new HubSpotOauth2($client)
+            );
+        }
+
+        return $this->oAuth2;
     }
 
-    protected static function buildSettingsPage(OptionStoreInterface $optionStore, OAuth2 $oauth2): SettingsPage
+    public function getOptionStore(): OptionStoreInterface
     {
-        $view = ViewFactory::build(__DIR__ . '/Admin/view/settings-page.php');
+        if (null === $this->optionStore) {
+            $this->optionStore = OptionStoreFactory::build();
+        }
 
-        return new SettingsPage($view, $optionStore, $oauth2);
+        return $this->optionStore;
     }
 
     protected static function buildHubSpotFactory(OptionStoreInterface $optionStore, OAuth2 $oauth2): HubSpotFactory
