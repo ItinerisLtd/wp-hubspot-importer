@@ -22,19 +22,6 @@ class Import
     /** @var Importer */
     protected $importer;
 
-    protected function setUp(): void
-    {
-        [
-            'optionStore' => $optionStore,
-            'blogPosts' => $blogPosts,
-        ] = Factory::buildWithRefreshingAccessToken();
-
-        $this->optionStore = $optionStore;
-        $this->blogPosts = $blogPosts;
-
-        $this->importer = Factory::buildImporter();
-    }
-
     public function __invoke(): void
     {
         WP_CLI::log('Importing from HubSpot...');
@@ -58,6 +45,19 @@ class Import
 
         // TODO: update timestamp.
         // TODO: update tags info.
+    }
+
+    protected function setUp(): void
+    {
+        [
+            'optionStore' => $optionStore,
+            'blogPosts' => $blogPosts,
+        ] = Factory::buildWithRefreshingAccessToken();
+
+        $this->optionStore = $optionStore;
+        $this->blogPosts = $blogPosts;
+
+        $this->importer = Factory::buildImporter();
     }
 
     protected function importSingleBatch(int $lastImportedAt, int $batchIndex): array

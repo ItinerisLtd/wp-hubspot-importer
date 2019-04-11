@@ -20,23 +20,6 @@ class Factory
     /**
      * TODO: Refactor this class!
      */
-    public static function build(): array
-    {
-        $optionStore = OptionStoreFactory::build();
-
-        $oauth2 = static::buildOAuth2($optionStore);
-        $settingPage = static::buildSettingsPage($optionStore, $oauth2);
-
-        return [
-            'oauth2' => $oauth2,
-            'optionStore' => $optionStore,
-            'settingPage' => $settingPage,
-        ];
-    }
-
-    /**
-     * TODO: Refactor this class!
-     */
     public static function buildWithRefreshingAccessToken(): array
     {
         [
@@ -57,23 +40,21 @@ class Factory
         ];
     }
 
-    protected static function buildHubSpotFactory(OptionStoreInterface $optionStore, OAuth2 $oauth2): HubSpotFactory
+    /**
+     * TODO: Refactor this class!
+     */
+    public static function build(): array
     {
-        $accessTokenExpireAt = $optionStore->getInt('wp_hubspot_importer_access_token_expire_at');
-        if ($accessTokenExpireAt - time() < HOUR_IN_SECONDS) {
-            $oauth2->refreshAccessToken();
-        }
-        // TODO: Check access token valid.
-        return new HubSpotFactory(
-            [
-                'key' => $optionStore->getString('wp_hubspot_importer_access_token'),
-                'oauth2' => true,
-            ],
-            null,
-            [
-                'http_errors' => false,
-            ]
-        );
+        $optionStore = OptionStoreFactory::build();
+
+        $oauth2 = static::buildOAuth2($optionStore);
+        $settingPage = static::buildSettingsPage($optionStore, $oauth2);
+
+        return [
+            'oauth2' => $oauth2,
+            'optionStore' => $optionStore,
+            'settingPage' => $settingPage,
+        ];
     }
 
     protected static function buildOAuth2(OptionStoreInterface $optionStore): OAuth2
@@ -97,6 +78,25 @@ class Factory
         $view = ViewFactory::build(__DIR__ . '/Admin/view/settings-page.php');
 
         return new SettingsPage($view, $optionStore, $oauth2);
+    }
+
+    protected static function buildHubSpotFactory(OptionStoreInterface $optionStore, OAuth2 $oauth2): HubSpotFactory
+    {
+        $accessTokenExpireAt = $optionStore->getInt('wp_hubspot_importer_access_token_expire_at');
+        if ($accessTokenExpireAt - time() < HOUR_IN_SECONDS) {
+            $oauth2->refreshAccessToken();
+        }
+        // TODO: Check access token valid.
+        return new HubSpotFactory(
+            [
+                'key' => $optionStore->getString('wp_hubspot_importer_access_token'),
+                'oauth2' => true,
+            ],
+            null,
+            [
+                'http_errors' => false,
+            ]
+        );
     }
 
     /**

@@ -11,14 +11,13 @@ use WP_User;
 class BlogPostRepo
 {
     /** @var string */
+    public $topicTaxonomy;
+    /** @var string */
     protected $postType;
     /** @var string */
     protected $hubspotBlogPostIdMetaKey;
     /** @var string */
     protected $hubspotFeaturedImageUrlMetaKey;
-    /** @var string */
-    public $topicTaxonomy;
-
     /** @var int[] */
     protected $mapping = [];
 
@@ -65,21 +64,6 @@ class BlogPostRepo
         );
     }
 
-    public function delete(BlogPost $blogPost): void
-    {
-        wp_delete_post(
-            $this->getPostId($blogPost),
-            true
-        );
-    }
-
-    public function isPreviouslyImported(BlogPost $blogPost): bool
-    {
-        $postId = $this->getPostId($blogPost);
-
-        return $postId > 0;
-    }
-
     protected function getPostId(BlogPost $blogPost): int
     {
         $hubSpotBlogPostId = $blogPost->getHubSpotBlogPostId();
@@ -107,5 +91,20 @@ class BlogPostRepo
         }
 
         return $this->mapping[$hubSpotBlogPostId];
+    }
+
+    public function delete(BlogPost $blogPost): void
+    {
+        wp_delete_post(
+            $this->getPostId($blogPost),
+            true
+        );
+    }
+
+    public function isPreviouslyImported(BlogPost $blogPost): bool
+    {
+        $postId = $this->getPostId($blogPost);
+
+        return $postId > 0;
     }
 }
