@@ -29,11 +29,6 @@ class BlogPost
     /** @var int */
     protected $postId;
 
-    /**
-     * BlogPost constructor.
-     *
-     * @param stdClass $original
-     */
     public function __construct(stdClass $original)
     {
         $this->original = $original;
@@ -95,7 +90,7 @@ class BlogPost
                         'value' => $this->getHubSpotBlogPostId(),
                     ],
                 ],
-            ]);
+            ]); // WPCS: slow query ok.
 
             $postIds = $query->get_posts();
 
@@ -142,7 +137,8 @@ class BlogPost
             );
         }
 
-        wp_set_post_terms($postId,
+        wp_set_post_terms(
+            $postId,
             $this->getTopics(),
             static::TOPIC_TAXONOMY
         );
@@ -187,7 +183,6 @@ class BlogPost
     protected function createOrUpdateAuthor(): WP_User
     {
         // TODO: Extract to its own class.
-
         $authorOriginal = $this->original->blog_author;
         $username = sanitize_user('hubspot_' . $authorOriginal->id, true);
         $displayName = sanitize_text_field($authorOriginal->display_name);

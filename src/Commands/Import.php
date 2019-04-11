@@ -63,7 +63,6 @@ class Import
         } while ($imported < $total);
 
         // TODO: update timestamp.
-
         // TODO: update tags info.
     }
 
@@ -79,15 +78,14 @@ class Import
             'updated__gt' => $lastImportedAt * 1000,
         ]);
 
-        if (200 !== $response->getStatusCode()) {
-
-            $data = $response->getData();
-
-            WP_CLI::error('Failed to fetch HubSpot blog posts', false);
-            WP_CLI::error(($data->errorType ?? 'Unknown error type') . ': ' . ($data->message ?? 'Unknown error message'));
-        }
-
         $data = $response->getData();
+
+        if (200 !== $response->getStatusCode()) {
+            WP_CLI::error('Failed to fetch HubSpot blog posts', false);
+            WP_CLI::error(
+                ($data->errorType ?? 'Unknown error type') . ': ' . ($data->message ?? 'Unknown error message')
+            );
+        }
 
         array_map(function (stdClass $original): void {
             $blogPost = new BlogPost($original);
