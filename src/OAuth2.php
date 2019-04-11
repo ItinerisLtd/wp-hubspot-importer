@@ -82,8 +82,8 @@ class OAuth2
     protected function isNonceValid(): bool
     {
         $nonce = '';
-        if (isset($_GET['_wpnonce'])) { // WPCS: Input var okay.
-            $nonce = sanitize_key($_GET['_wpnonce']); // WPCS: Input var okay.
+        if (isset($_GET['_wpnonce'])) { // WPCS: Input var ok.
+            $nonce = sanitize_key($_GET['_wpnonce']); // WPCS: Input var ok.
         }
 
         $nonceVerificationResult = wp_verify_nonce($nonce, static::NONCE_ACTION);
@@ -94,8 +94,8 @@ class OAuth2
     protected function getCodeFromSuperGlobal(): string
     {
         $code = '';
-        if (isset($_GET['code'])) { // WPCS: Input var okay.
-            $code = sanitize_text_field(wp_unslash($_GET['code'])); // WPCS: Input var okay.
+        if (isset($_GET['code'])) { // WPCS: CSRF, Input var ok.
+            $code = sanitize_text_field(wp_unslash($_GET['code'])); // WPCS: CSRF, Input var ok.
         }
 
         return $code;
