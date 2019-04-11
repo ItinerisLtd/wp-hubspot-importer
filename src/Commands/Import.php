@@ -30,12 +30,13 @@ class Import
 
             /** @var OAuth2 $oauth2 */
             $oauth2->refreshAccessToken();
+
+            // TODO: Check access token valid.
         }
 
-        // TODO: Check access token valid.
         $factory = new HubSpotFactory(
             [
-                'key' => $optionStore->getString('wp_hubspot_importer_access_token') . 'ssss',
+                'key' => $optionStore->getString('wp_hubspot_importer_access_token'),
                 'oauth2' => true,
             ],
             null,
@@ -70,8 +71,6 @@ class Import
 
     protected function importSingleBatch(BlogPosts $blogPosts, int $lastImportedAt, int $batchIndex): array
     {
-        WP_CLI::success('$batchIndex' . $batchIndex);
-
         $response = $blogPosts->all([
             'limit' => static::LIMIT,
             'offset' => static::LIMIT * $batchIndex,

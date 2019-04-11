@@ -38,18 +38,12 @@ class BlogPost
     {
         switch ($this->whatToDo()) {
             case static::CREATE_POST:
-                // TODO!
-                WP_CLI::success('create!');
                 $this->createPost();
                 break;
             case static::UPDATE_POST:
-                // TODO!
-                WP_CLI::success('update!');
                 $this->updatePost();
                 break;
             case static::DELETE_POST:
-                // TODO!
-                WP_CLI::success('delete!');
                 $this->deletePost();
                 break;
         }
@@ -79,7 +73,6 @@ class BlogPost
     protected function getPostId(): int
     {
         if (null === $this->postId) {
-            WP_CLI::success($this->getHubSpotBlogPostId());
             $query = new WP_Query([
                 'fields' => 'ids',
                 'post_type' => static::POST_TYPE,
