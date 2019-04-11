@@ -39,8 +39,7 @@
 
     <!-- This is because wpcs/phpcs not support closure yet -->
     <rule ref="WordPressVIPMinimum.Variables.VariableAnalysis.UndefinedVariable">
-        <exclude-pattern>/src/Plugin.php</exclude-pattern>
-        <exclude-pattern>/src/Commands/Verify.php</exclude-pattern>
+        <exclude-pattern>*.php</exclude-pattern>
     </rule>
 
     <rule ref="WordPress.NamingConventions.ValidVariableName.StringNotSnakeCase">

@@ -5,6 +5,7 @@ namespace Itineris\WPHubSpotImporter;
 
 use Itineris\WPHubSpotImporter\Admin\SettingsPage;
 use Itineris\WPHubSpotImporter\API\OAuth2;
+use Itineris\WPHubSpotImporter\Commands\Import;
 use Itineris\WPHubSpotImporter\Commands\Verify;
 use WP_CLI;
 
@@ -23,6 +24,7 @@ class Plugin
         });
 
         /** @var OAuth2 $oauth2 */
+        // TODO: Refactor!
         add_action('wp', function () use ($oauth2): void {
             $action = null;
 
@@ -40,6 +42,7 @@ class Plugin
 
     public static function registerCommands(): void
     {
-        WP_CLI::add_command('hubspot:verify', [Verify::class, '__invoke']);
+        WP_CLI::add_command('hubspot verify', Verify::class);
+        WP_CLI::add_command('hubspot import', Import::class);
     }
 }

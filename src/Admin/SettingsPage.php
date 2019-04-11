@@ -37,12 +37,10 @@ class SettingsPage
             __('WP HubSpot Importer', 'wp-hubspot-importer'),
             'manage_options',
             static::SLUG,
+            // TODO: Update wp-kses-view to return closure.
             function (): void {
-                // phpcs:ignore WordPressVIPMinimum.Variables.VariableAnalysis.UndefinedVariable
                 $this->view->render((object) [
-                    // phpcs:ignore WordPressVIPMinimum.Variables.VariableAnalysis.UndefinedVariable
                     'authenticationUrl' => $this->oauth2->getAuthenticationUrl(),
-                    // phpcs:ignore WordPressVIPMinimum.Variables.VariableAnalysis.UndefinedVariable
                     'hasRefreshToken' => '' !== $this->optionStore->getString('wp_hubspot_importer_refresh_token'),
                 ]);
             }

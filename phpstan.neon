@@ -7,21 +7,29 @@ parameters:
 
     autoload_files:
         - %rootDir%/../../../phpstan-bootstrap.php
-        - %rootDir%/../../../wordpress/wp-includes/functions.php
+
+        - %rootDir%/../../../wordpress/wp-admin/includes/plugin.php
         - %rootDir%/../../../wordpress/wp-includes/formatting.php
+        - %rootDir%/../../../wordpress/wp-includes/functions.php
+        - %rootDir%/../../../wordpress/wp-includes/kses.php
+        - %rootDir%/../../../wordpress/wp-includes/l10n.php
+        - %rootDir%/../../../wordpress/wp-includes/link-template.php
         - %rootDir%/../../../wordpress/wp-includes/pluggable.php
         - %rootDir%/../../../wordpress/wp-includes/plugin.php
-        - %rootDir%/../../../wordpress/wp-admin/includes/plugin.php
-        - %rootDir%/../../../wordpress/wp-includes/link-template.php
-        - %rootDir%/../../../wordpress/wp-includes/l10n.php
+        - %rootDir%/../../../wordpress/wp-includes/post.php
+        - %rootDir%/../../../wordpress/wp-includes/user.php
+
         - %rootDir%/../../../wordpress/wp-includes/class-wp-walker.php
         - %rootDir%/../../../wordpress/wp-admin/includes/template.php
+
         - %rootDir%/../../../vendor/wp-cli/wp-cli/php/class-wp-cli.php
 
     ignoreErrors:
         - '#Cannot cast SevenShores\\Hubspot\\Http\\Response to string#'
         - '#Undefined variable: \$context#'
-        - '#Parameter \#1 $str of function sanitize_text_field expects string, array|string given.#'
+        - '#Parameter \#1 \$str of function sanitize_text_field expects string, array|string given.#'
+        - '#Parameter \#2 \$callable of static method WP_CLI::add_command\(\) expects callable\(\)#'
+
 
 includes:
     - vendor/phpstan/phpstan-strict-rules/rules.neon
