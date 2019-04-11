@@ -8,6 +8,9 @@ use Itineris\WPHubSpotImporter\OAuth2;
 use TypistTech\WPOptionStore\OptionStoreInterface;
 use WP_CLI;
 
+/**
+ * TODO: Re-think this command.
+ */
 class Verify
 {
     public function __invoke(): void

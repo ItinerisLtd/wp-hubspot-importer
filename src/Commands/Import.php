@@ -5,8 +5,7 @@ namespace Itineris\WPHubSpotImporter\Commands;
 
 use Itineris\WPHubSpotImporter\BlogPost;
 use Itineris\WPHubSpotImporter\Factory;
-use Itineris\WPHubSpotImporter\OAuth2;
-use SevenShores\Hubspot\Factory as HubSpotFactory;
+use Itineris\WPHubSpotImporter\Importer;
 use SevenShores\Hubspot\Resources\BlogPosts;
 use stdClass;
 use TypistTech\WPOptionStore\OptionStoreInterface;
@@ -16,42 +15,21 @@ class Import
 {
     protected const LIMIT = 20;
 
+    /** @var OptionStoreInterface */
+    protected $optionStore;
+    /** @var BlogPosts */
+    protected $blogPosts;
+    /** @var Importer */
+    protected $importer;
+
     public function __invoke(): void
     {
         WP_CLI::log('Importing from HubSpot...');
 
-        [
-            'oauth2' => $oauth2,
-            'optionStore' => $optionStore,
-        ] = Factory::build();
+        $this->setUp();
 
-        /** @var OptionStoreInterface $optionStore */
-        $accessTokenExpireAt = $optionStore->getInt('wp_hubspot_importer_access_token_expire_at');
-        if ($accessTokenExpireAt - time() < HOUR_IN_SECONDS) {
-            WP_CLI::log('Refreshing access token...');
-
-            /** @var OAuth2 $oauth2 */
-            $oauth2->refreshAccessToken();
-
-            // TODO: Check access token valid.
-        }
-
-        $factory = new HubSpotFactory(
-            [
-                'key' => $optionStore->getString('wp_hubspot_importer_access_token'),
-                'oauth2' => true,
-            ],
-            null,
-            [
-                'http_errors' => false,
-            ]
-        );
-
-        $lastImportedAt = $optionStore->getInt('wp_hubspot_importer_last_imported_at');
-
+        $lastImportedAt = $this->optionStore->getInt('wp_hubspot_importer_last_imported_at');
         WP_CLI::log('Fetching HubSpot blog posts updated since ' . date(DATE_RFC2822, $lastImportedAt));
-
-        $blogPosts = $factory->blogPosts();
 
         $batchIndex = 0;
         $imported = 0;
@@ -60,7 +38,7 @@ class Import
             [
                 'total' => $total,
                 'batchSize' => $batchSize,
-            ] = $this->importSingleBatch($blogPosts, $lastImportedAt, $batchIndex++);
+            ] = $this->importSingleBatch($lastImportedAt, $batchIndex++);
 
             $imported += $batchSize;
         } while ($imported < $total);
@@ -69,9 +47,22 @@ class Import
         // TODO: update tags info.
     }
 
-    protected function importSingleBatch(BlogPosts $blogPosts, int $lastImportedAt, int $batchIndex): array
+    protected function setUp(): void
     {
-        $response = $blogPosts->all([
+        [
+            'optionStore' => $optionStore,
+            'blogPosts' => $blogPosts,
+        ] = Factory::buildWithRefreshingAccessToken();
+
+        $this->optionStore = $optionStore;
+        $this->blogPosts = $blogPosts;
+
+        $this->importer = Factory::buildImporter();
+    }
+
+    protected function importSingleBatch(int $lastImportedAt, int $batchIndex): array
+    {
+        $response = $this->blogPosts->all([
             'limit' => static::LIMIT,
             'offset' => static::LIMIT * $batchIndex,
             'updated__gt' => $lastImportedAt * 1000,
@@ -88,7 +79,9 @@ class Import
 
         array_map(function (stdClass $original): void {
             $blogPost = new BlogPost($original);
-            $blogPost->import();
+            $this->importer->import($blogPost);
+
+            WP_CLI::success('Imported: ' . $blogPost->getHubSpotBlogPostId());
         }, $data->objects);
 
         return [
