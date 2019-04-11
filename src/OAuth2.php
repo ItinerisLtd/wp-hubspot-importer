@@ -81,10 +81,9 @@ class OAuth2
 
     protected function isNonceValid(): bool
     {
-        $nonce = '';
-        if (isset($_GET['_wpnonce'])) { // WPCS: Input var ok.
-            $nonce = sanitize_key($_GET['_wpnonce']); // WPCS: Input var ok.
-        }
+        $nonce = isset($_GET['_wpnonce']) // WPCS: Input var ok.
+            ? sanitize_key($_GET['_wpnonce']) // WPCS: Input var ok.
+            : '';
 
         $nonceVerificationResult = wp_verify_nonce($nonce, static::NONCE_ACTION);
 
@@ -93,12 +92,9 @@ class OAuth2
 
     protected function getCodeFromSuperGlobal(): string
     {
-        $code = '';
-        if (isset($_GET['code'])) { // WPCS: CSRF, Input var ok.
-            $code = sanitize_text_field(wp_unslash($_GET['code'])); // WPCS: CSRF, Input var ok.
-        }
-
-        return $code;
+        return isset($_GET['code']) // WPCS: CSRF, Input var ok.
+            ? sanitize_text_field(wp_unslash($_GET['code'])) // WPCS: CSRF, Input var ok.
+            : '';
     }
 
     protected function saveTokensIntoDatabase(stdClass $data): void
