@@ -14,6 +14,8 @@ use WP_CLI;
 
 class Import
 {
+    protected const LIMIT = 20;
+
     public function __invoke(): void
     {
         WP_CLI::log('Importing from HubSpot...');
@@ -66,8 +68,6 @@ class Import
         // TODO: update timestamp.
         // TODO: update tags info.
     }
-
-    protected const LIMIT = 1;
 
     protected function importSingleBatch(BlogPosts $blogPosts, int $lastImportedAt, int $batchIndex): array
     {

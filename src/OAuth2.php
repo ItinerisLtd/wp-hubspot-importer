@@ -15,6 +15,7 @@ class OAuth2
         'content',
     ];
     protected const NONCE_ACTION = 'wp-hubspot-importer-authentication';
+
     /** @var OptionStoreInterface */
     protected $optionStore;
     /** @var HubSpotOauth2 */
@@ -44,28 +45,6 @@ class OAuth2
             'authentication-callback',
             $nonceUrl
         );
-    }
-
-    protected function isNonceValid(): bool
-    {
-        $nonce = '';
-        if (isset($_GET['_wpnonce'])) { // WPCS: Input var okay.
-            $nonce = sanitize_key($_GET['_wpnonce']); // WPCS: Input var okay.
-        }
-
-        $nonceVerificationResult = wp_verify_nonce($nonce, static::NONCE_ACTION);
-
-        return is_int($nonceVerificationResult) && $nonceVerificationResult > 0;
-    }
-
-    protected function getCodeFromSuperGlobal(): string
-    {
-        $code = '';
-        if (isset($_GET['code'])) { // WPCS: Input var okay.
-            $code = sanitize_text_field(wp_unslash($_GET['code'])); // WPCS: Input var okay.
-        }
-
-        return $code;
     }
 
     public function handleAuthenticationCallback(): void
@@ -98,6 +77,28 @@ class OAuth2
             SettingsPage::getUrl()
         );
         exit;
+    }
+
+    protected function isNonceValid(): bool
+    {
+        $nonce = '';
+        if (isset($_GET['_wpnonce'])) { // WPCS: Input var okay.
+            $nonce = sanitize_key($_GET['_wpnonce']); // WPCS: Input var okay.
+        }
+
+        $nonceVerificationResult = wp_verify_nonce($nonce, static::NONCE_ACTION);
+
+        return is_int($nonceVerificationResult) && $nonceVerificationResult > 0;
+    }
+
+    protected function getCodeFromSuperGlobal(): string
+    {
+        $code = '';
+        if (isset($_GET['code'])) { // WPCS: Input var okay.
+            $code = sanitize_text_field(wp_unslash($_GET['code'])); // WPCS: Input var okay.
+        }
+
+        return $code;
     }
 
     protected function saveTokensIntoDatabase(stdClass $data): void
