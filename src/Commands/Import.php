@@ -3,9 +3,9 @@ declare(strict_types=1);
 
 namespace Itineris\WPHubSpotImporter\Commands;
 
-use Itineris\WPHubSpotImporter\API\OAuth2;
 use Itineris\WPHubSpotImporter\BlogPost;
 use Itineris\WPHubSpotImporter\Factory;
+use Itineris\WPHubSpotImporter\OAuth2;
 use SevenShores\Hubspot\Factory as HubSpotFactory;
 use SevenShores\Hubspot\Resources\BlogPosts;
 use stdClass;

@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace Itineris\WPHubSpotImporter;
 
 use Itineris\WPHubSpotImporter\Admin\SettingsPage;
-use Itineris\WPHubSpotImporter\API\OAuth2;
 use Itineris\WPHubSpotImporter\Commands\Import;
 use Itineris\WPHubSpotImporter\Commands\Verify;
 use WP_CLI;

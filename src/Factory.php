@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace Itineris\WPHubSpotImporter;
 
 use Itineris\WPHubSpotImporter\Admin\SettingsPage;
-use Itineris\WPHubSpotImporter\API\OAuth2;
 use SevenShores\Hubspot\Http\Client;
 use SevenShores\Hubspot\Resources\OAuth2 as HubSpotOauth2;
 use TypistTech\WPKsesView\Factory as ViewFactory;

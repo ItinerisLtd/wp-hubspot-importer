@@ -47,6 +47,9 @@ class BlogPost
                 $this->deletePost();
                 break;
         }
+
+        // TODO.
+        WP_CLI::success('Imported: ' . $this->getHubSpotBlogPostId());
     }
 
     protected function isPreviouslyImported(): bool

@@ -1,16 +1,13 @@
 <?php
 declare(strict_types=1);
 
-namespace Itineris\WPHubSpotImporter\API;
+namespace Itineris\WPHubSpotImporter;
 
 use Itineris\WPHubSpotImporter\Admin\SettingsPage;
 use SevenShores\Hubspot\Http\Response;
 use SevenShores\Hubspot\Resources\OAuth2 as HubSpotOauth2;
 use TypistTech\WPOptionStore\OptionStoreInterface;
 
-/**
- * TODO: Move this class 1 level up, i.e: not under API namespace.
- */
 class OAuth2
 {
     public const SCOPES = [
