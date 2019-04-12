@@ -23,8 +23,8 @@ class Container
     protected $settingsPage;
     /** @var HubSpotFactory */
     protected $hubSpotFactory;
-    /** @var UserRepo */
-    protected $userRepo;
+    /** @var AuthorRepo */
+    protected $authorRepo;
     /** @var BlogPostRepo */
     protected $blogPostRepo;
     /** @var OAuth2 */
@@ -97,7 +97,7 @@ class Container
         if (null === $this->importer) {
             $this->importer = new Importer(
                 $this->getBlogPostRepo(),
-                $this->getUserRepo()
+                $this->getAuthorRepo()
             );
         }
 
@@ -119,13 +119,13 @@ class Container
         return $this->blogPostRepo;
     }
 
-    protected function getUserRepo(): UserRepo
+    protected function getAuthorRepo(): AuthorRepo
     {
-        if (null === $this->userRepo) {
-            $this->userRepo = new UserRepo();
+        if (null === $this->authorRepo) {
+            $this->authorRepo = new AuthorRepo();
         }
 
-        return $this->userRepo;
+        return $this->authorRepo;
     }
 
     public function getBlogPosts(): BlogPosts
