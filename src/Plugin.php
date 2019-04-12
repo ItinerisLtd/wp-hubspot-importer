@@ -12,13 +12,11 @@ class Plugin
 {
     public static function run(): void
     {
-        [
-            'oauth2' => $oauth2,
-            'settingPage' => $settingPage,
-        ] = Factory::build();
-
-        /** @var SettingsPage $settingPage */
-        add_action('admin_menu', [$settingPage, 'addManagementPage']);
+        add_action('admin_menu', function (): void {
+            $container = Container::getInstance();
+            $settingPage = $container->getSettingsPage();
+            $settingPage->addManagementPage();
+        });
 
         /** @var OAuth2 $oauth2 */
         add_action('wp', function () use ($oauth2): void {
@@ -32,6 +30,8 @@ class Plugin
             }
 
             if ('authentication-callback' === $action) {
+                $container = Container::getInstance();
+                $oauth2 = $container->getOAuth2();
                 $oauth2->handleAuthenticationCallback();
             }
         });

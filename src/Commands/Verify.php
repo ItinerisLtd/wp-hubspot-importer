@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Itineris\WPHubSpotImporter\Commands;
 
-use Itineris\WPHubSpotImporter\Factory;
+use Itineris\WPHubSpotImporter\Container;
 use Itineris\WPHubSpotImporter\OAuth2;
 use TypistTech\WPOptionStore\OptionStoreInterface;
 use WP_CLI;
@@ -18,7 +18,7 @@ class Verify
         [
             'oauth2' => $oauth2,
             'optionStore' => $optionStore,
-        ] = Factory::build();
+        ] = Container::build();
 
         WP_CLI::log("==> Verifying 'WP_HUBSPOT_IMPORTER_CLIENT_ID' is defined...");
         $result = $this->verifyStringOptionNotEmpty('wp_hubspot_importer_client_id', $optionStore);
