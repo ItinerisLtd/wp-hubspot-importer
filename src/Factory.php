@@ -11,10 +11,6 @@ use TypistTech\WPKsesView\Factory as ViewFactory;
 use TypistTech\WPOptionStore\Factory as OptionStoreFactory;
 use TypistTech\WPOptionStore\OptionStoreInterface;
 
-/**
- * TODO: Refactor this class!
- * TODO: Refactor to singleton!
- */
 class Factory
 {
     protected $oAuth2;
@@ -22,6 +18,7 @@ class Factory
     protected $settingsPage;
     protected $blogPosts;
     protected $hubSpotFactory;
+    protected $userRepo;
 
     /**
      * TODO: Refactor this class!
@@ -111,22 +108,42 @@ class Factory
         );
     }
 
-    /**
-     * TODO: Refactor this class!
-     */
-    public static function buildImporter(): Importer
+    public function getImporter(): Importer
     {
-        // TODO: Allow customization, i.e: filters.
-        $blogPostRepo = new BlogPostRepo(
-            'post',
-            '_hubspot_blog_post_id',
-            'hubspot_featured_image_url',
-            'post_tag'
-        );
+        if (null === $this->blogPostRepo) {
+            $this->importer = new Importer(
+                $this->getBlogPostRepo(),
+                $this->getUserRepo()
+            );
+        }
 
-        return new Importer(
-            $blogPostRepo,
-            new UserRepo()
-        );
+        return $this->importer;
+    }
+
+    protected $importer;
+    protected $blogPostRepo;
+
+    public function getBlogPostRepo(): BlogPostRepo
+    {
+        if (null === $this->blogPostRepo) {
+            // TODO: Allow customization, i.e: filters.
+            $this->blogPostRepo = new BlogPostRepo(
+                'post',
+                '_hubspot_blog_post_id',
+                'hubspot_featured_image_url',
+                'post_tag'
+            );
+        }
+
+        return $this->blogPostRepo;
+    }
+
+    public function getUserRepo(): UserRepo
+    {
+        if (null === $this->userRepo) {
+            $this->userRepo = new UserRepo();
+        }
+
+        return $this->userRepo;
     }
 }
