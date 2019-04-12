@@ -142,7 +142,6 @@ class Container
     {
         // TODO: Review me!
         if (null === $this->hubSpotFactory) {
-
             $optionStore = $this->getOptionStore();
             $oAuth2 = $this->getOAuth2();
 
