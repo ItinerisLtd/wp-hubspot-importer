@@ -12,21 +12,38 @@ use TypistTech\WPKsesView\Factory as ViewFactory;
 use TypistTech\WPOptionStore\Factory as OptionStoreFactory;
 use TypistTech\WPOptionStore\OptionStoreInterface;
 
+/**
+ * TODO: Find a better alternative, maybe `typisttech/wp-contained-hook`.
+ */
 class Container
 {
-    protected $oAuth2;
-    protected $optionStore;
+    /** @var Container */
+    protected static $instance;
+    /** @var SettingsPage */
     protected $settingsPage;
-    protected $blogPosts;
+    /** @var HubSpotFactory */
     protected $hubSpotFactory;
+    /** @var UserRepo */
     protected $userRepo;
-    protected $importer;
+    /** @var BlogPostRepo */
     protected $blogPostRepo;
+    /** @var OAuth2 */
+    protected $oAuth2;
+    /** @var OptionStoreInterface */
+    protected $optionStore;
+    /** @var BlogPosts */
+    protected $blogPosts;
+    /** @var Importer */
+    protected $importer;
 
     public static function getInstance(): Container
     {
-        // TODO: Allow customization, i.e: filters.
-        return new static();
+        if (null === static::$instance) {
+            // TODO: Allow customization, i.e: filters.
+            static::$instance = new static();
+        }
+
+        return static::$instance;
     }
 
     public function getSettingsPage(): SettingsPage
@@ -77,14 +94,14 @@ class Container
 
     public function getImporter(): Importer
     {
-        if (null === $this->hubSpotFactory) {
+        if (null === $this->importer) {
             $this->importer = new Importer(
                 $this->getBlogPostRepo(),
                 $this->getUserRepo()
             );
         }
 
-        return $this->hubSpotFactory;
+        return $this->importer;
     }
 
     protected function getBlogPostRepo(): BlogPostRepo

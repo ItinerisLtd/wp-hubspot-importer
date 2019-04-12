@@ -5,7 +5,7 @@ namespace Itineris\WPHubSpotImporter;
 
 use Itineris\WPHubSpotImporter\Admin\SettingsPage;
 use SevenShores\Hubspot\Http\Response;
-use SevenShores\Hubspot\Resources\OAuth2 as HubSpotOauth2;
+use SevenShores\Hubspot\Resources\OAuth2 as HubSpotOAuth2;
 use stdClass;
 use TypistTech\WPOptionStore\OptionStoreInterface;
 
@@ -18,18 +18,18 @@ class OAuth2
 
     /** @var OptionStoreInterface */
     protected $optionStore;
-    /** @var HubSpotOauth2 */
-    protected $oauth2;
+    /** @var HubSpotOAuth2 */
+    protected $oAuth2;
 
-    public function __construct(OptionStoreInterface $optionStore, HubSpotOauth2 $oauth2)
+    public function __construct(OptionStoreInterface $optionStore, HubSpotOAuth2 $oAuth2)
     {
         $this->optionStore = $optionStore;
-        $this->oauth2 = $oauth2;
+        $this->oAuth2 = $oAuth2;
     }
 
     public function getAuthenticationUrl(): string
     {
-        return (string) $this->oauth2->getAuthUrl(
+        return (string) $this->oAuth2->getAuthUrl(
             $this->optionStore->getString('wp_hubspot_importer_client_id'),
             $this->getAuthenticationCallbackUrl(),
             static::SCOPES
@@ -49,7 +49,7 @@ class OAuth2
 
     public function handleAuthenticationCallback(): void
     {
-        if ($this->isNonceValid()) {
+        if (! $this->isNonceValid()) {
             wp_die('This link has been expired.');
         }
 
@@ -58,7 +58,7 @@ class OAuth2
             wp_die('Authentication code not found');
         }
 
-        $response = $this->oauth2->getTokensByCode(
+        $response = $this->oAuth2->getTokensByCode(
             $this->optionStore->getString('wp_hubspot_importer_client_id'),
             $this->optionStore->getString('wp_hubspot_importer_client_secret'),
             $this->getAuthenticationCallbackUrl(),
@@ -115,7 +115,7 @@ class OAuth2
 
     public function refreshAccessToken(): void
     {
-        $response = $this->oauth2->getTokensByRefresh(
+        $response = $this->oAuth2->getTokensByRefresh(
             $this->optionStore->getString('wp_hubspot_importer_client_id'),
             $this->optionStore->getString('wp_hubspot_importer_client_secret'),
             $this->optionStore->getString('wp_hubspot_importer_refresh_token')
@@ -131,7 +131,7 @@ class OAuth2
 
     public function getRefreshTokenInfo(): Response
     {
-        return $this->oauth2->getRefreshTokenInfo(
+        return $this->oAuth2->getRefreshTokenInfo(
             $this->optionStore->getString('wp_hubspot_importer_refresh_token')
         );
     }

@@ -18,11 +18,10 @@ class Plugin
             $settingPage->addManagementPage();
         });
 
-        /** @var OAuth2 $oauth2 */
-        add_action('wp', function () use ($oauth2): void {
+        // TODO: Refactor!
+        add_action('wp', function (): void {
             $action = null;
 
-            // TODO: Refactor!
             if (isset($_GET['wp-hubspot-importer-action'])) { // WPCS: Input var ok.
                 $action = sanitize_text_field(
                     wp_unslash($_GET['wp-hubspot-importer-action'])

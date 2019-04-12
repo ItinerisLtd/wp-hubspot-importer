@@ -6,6 +6,7 @@ namespace Itineris\WPHubSpotImporter\Commands;
 use Itineris\WPHubSpotImporter\BlogPost;
 use Itineris\WPHubSpotImporter\Container;
 use Itineris\WPHubSpotImporter\Importer;
+use Itineris\WPHubSpotImporter\OAuth2;
 use SevenShores\Hubspot\Resources\BlogPosts;
 use stdClass;
 use TypistTech\WPOptionStore\OptionStoreInterface;
