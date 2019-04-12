@@ -144,11 +144,11 @@ class Container
         if (null === $this->hubSpotFactory) {
 
             $optionStore = $this->getOptionStore();
-            $oauth2 = $this->getOAuth2();
+            $oAuth2 = $this->getOAuth2();
 
             $accessTokenExpireAt = $optionStore->getInt('wp_hubspot_importer_access_token_expire_at');
             if ($accessTokenExpireAt - time() < HOUR_IN_SECONDS) {
-                $oauth2->refreshAccessToken();
+                $oAuth2->refreshAccessToken();
             }
 
             // TODO: Check access token valid.

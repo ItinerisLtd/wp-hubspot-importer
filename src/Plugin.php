@@ -30,8 +30,8 @@ class Plugin
 
             if ('authentication-callback' === $action) {
                 $container = Container::getInstance();
-                $oauth2 = $container->getOAuth2();
-                $oauth2->handleAuthenticationCallback();
+                $oAuth2 = $container->getOAuth2();
+                $oAuth2->handleAuthenticationCallback();
             }
         });
     }
