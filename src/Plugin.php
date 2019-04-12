@@ -12,19 +12,16 @@ class Plugin
 {
     public static function run(): void
     {
-        [
-            'oauth2' => $oauth2,
-            'settingPage' => $settingPage,
-        ] = Factory::build();
+        add_action('admin_menu', function (): void {
+            $container = Container::getInstance();
+            $settingPage = $container->getSettingsPage();
+            $settingPage->addManagementPage();
+        });
 
-        /** @var SettingsPage $settingPage */
-        add_action('admin_menu', [$settingPage, 'addManagementPage']);
-
-        /** @var OAuth2 $oauth2 */
-        add_action('wp', function () use ($oauth2): void {
+        // TODO: Refactor!
+        add_action('wp', function (): void {
             $action = null;
 
-            // TODO: Refactor!
             if (isset($_GET['wp-hubspot-importer-action'])) { // WPCS: Input var ok.
                 $action = sanitize_text_field(
                     wp_unslash($_GET['wp-hubspot-importer-action'])
@@ -32,7 +29,9 @@ class Plugin
             }
 
             if ('authentication-callback' === $action) {
-                $oauth2->handleAuthenticationCallback();
+                $container = Container::getInstance();
+                $oAuth2 = $container->getOAuth2();
+                $oAuth2->handleAuthenticationCallback();
             }
         });
     }

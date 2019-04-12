@@ -12,17 +12,17 @@ class SettingsPage
     protected const SLUG = 'wp-hubspot-importer';
 
     /** @var OAuth2 */
-    protected $oauth2;
+    protected $oAuth2;
     /** @var OptionStoreInterface */
     protected $optionStore;
     /** @var ViewInterface */
     protected $view;
 
-    public function __construct(ViewInterface $view, OptionStoreInterface $optionStore, OAuth2 $oauth2)
+    public function __construct(ViewInterface $view, OptionStoreInterface $optionStore, OAuth2 $oAuth2)
     {
         $this->view = $view;
         $this->optionStore = $optionStore;
-        $this->oauth2 = $oauth2;
+        $this->oAuth2 = $oAuth2;
     }
 
     public static function getUrl(): string
@@ -40,7 +40,7 @@ class SettingsPage
             // TODO: Update wp-kses-view to return closure.
             function (): void {
                 $this->view->render((object) [
-                    'authenticationUrl' => $this->oauth2->getAuthenticationUrl(),
+                    'authenticationUrl' => $this->oAuth2->getAuthenticationUrl(),
                     'hasRefreshToken' => '' !== $this->optionStore->getString('wp_hubspot_importer_refresh_token'),
                 ]);
             }

@@ -4,8 +4,9 @@ declare(strict_types=1);
 namespace Itineris\WPHubSpotImporter\Commands;
 
 use Itineris\WPHubSpotImporter\BlogPost;
-use Itineris\WPHubSpotImporter\Factory;
+use Itineris\WPHubSpotImporter\Container;
 use Itineris\WPHubSpotImporter\Importer;
+use Itineris\WPHubSpotImporter\OAuth2;
 use SevenShores\Hubspot\Resources\BlogPosts;
 use stdClass;
 use TypistTech\WPOptionStore\OptionStoreInterface;
@@ -26,7 +27,10 @@ class Import
     {
         WP_CLI::log('Importing from HubSpot...');
 
-        $this->setUp();
+        $container = Container::getInstance();
+        $this->optionStore = $container->getOptionStore();
+        $this->blogPosts = $container->getBlogPosts();
+        $this->importer = $container->getImporter();
 
         $lastImportedAt = $this->optionStore->getInt('wp_hubspot_importer_last_imported_at');
         WP_CLI::log('Fetching HubSpot blog posts updated since ' . date(DATE_RFC2822, $lastImportedAt));
@@ -45,19 +49,6 @@ class Import
 
         // TODO: update timestamp.
         // TODO: update tags info.
-    }
-
-    protected function setUp(): void
-    {
-        [
-            'optionStore' => $optionStore,
-            'blogPosts' => $blogPosts,
-        ] = Factory::buildWithRefreshingAccessToken();
-
-        $this->optionStore = $optionStore;
-        $this->blogPosts = $blogPosts;
-
-        $this->importer = Factory::buildImporter();
     }
 
     protected function importSingleBatch(int $lastImportedAt, int $batchIndex): array

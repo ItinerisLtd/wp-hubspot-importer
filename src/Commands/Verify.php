@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Itineris\WPHubSpotImporter\Commands;
 
-use Itineris\WPHubSpotImporter\Factory;
+use Itineris\WPHubSpotImporter\Container;
 use Itineris\WPHubSpotImporter\OAuth2;
 use TypistTech\WPOptionStore\OptionStoreInterface;
 use WP_CLI;
@@ -13,31 +13,35 @@ use WP_CLI;
  */
 class Verify
 {
+    /** @var OptionStoreInterface */
+    private $optionStore;
+    /** @var OAuth2 */
+    protected $oAuth2;
+
     public function __invoke(): void
     {
-        [
-            'oauth2' => $oauth2,
-            'optionStore' => $optionStore,
-        ] = Factory::build();
+        $container = Container::getInstance();
+        $this->optionStore = $container->getOptionStore();
+        $this->oAuth2 = $container->getOAuth2();
 
         WP_CLI::log("==> Verifying 'WP_HUBSPOT_IMPORTER_CLIENT_ID' is defined...");
-        $result = $this->verifyStringOptionNotEmpty('wp_hubspot_importer_client_id', $optionStore);
+        $result = $this->verifyStringOptionNotEmpty('wp_hubspot_importer_client_id');
         $isSuccessful = $result;
 
         WP_CLI::log("==> Verifying 'WP_HUBSPOT_IMPORTER_CLIENT_SECRET' is defined...");
-        $result = $this->verifyStringOptionNotEmpty('wp_hubspot_importer_client_secret', $optionStore);
+        $result = $this->verifyStringOptionNotEmpty('wp_hubspot_importer_client_secret');
         $isSuccessful = $isSuccessful && $result;
 
         WP_CLI::log("==> Verifying 'refresh token' is set...");
-        $result = $this->verifyStringOptionNotEmpty('wp_hubspot_importer_refresh_token', $optionStore);
+        $result = $this->verifyStringOptionNotEmpty('wp_hubspot_importer_refresh_token');
         $isSuccessful = $isSuccessful && $result;
 
         WP_CLI::log("==> Verifying 'refresh token' info...");
-        $result = $this->verifyRefreshTokenInfo($oauth2);
+        $result = $this->verifyRefreshTokenInfo();
         $isSuccessful = $isSuccessful && $result;
 
         WP_CLI::log("==> Verifying 'access token' refreshing...");
-        $result = $this->verifyAccessTokenRefreshing($oauth2, $optionStore);
+        $result = $this->verifyAccessTokenRefreshing();
         $isSuccessful = $isSuccessful && $result;
 
         if ($isSuccessful) {
@@ -47,10 +51,10 @@ class Verify
         }
     }
 
-    protected function verifyStringOptionNotEmpty(string $key, OptionStoreInterface $optionStore): bool
+    protected function verifyStringOptionNotEmpty(string $key): bool
     {
         $displayKey = strtoupper($key);
-        $value = $optionStore->getString($key);
+        $value = $this->optionStore->getString($key);
 
         if ('' === $value) {
             WP_CLI::error("'${displayKey}' not found", false);
@@ -61,9 +65,9 @@ class Verify
         return true;
     }
 
-    protected function verifyRefreshTokenInfo(OAuth2 $oauth2): bool
+    protected function verifyRefreshTokenInfo(): bool
     {
-        $info = $oauth2->getRefreshTokenInfo();
+        $info = $this->oAuth2->getRefreshTokenInfo();
 
         if (200 !== $info->getStatusCode()) {
             WP_CLI::error("'refresh token' is not valid", false);
@@ -98,11 +102,11 @@ class Verify
         return true;
     }
 
-    protected function verifyAccessTokenRefreshing(OAuth2 $oauth2, OptionStoreInterface $optionStore): bool
+    protected function verifyAccessTokenRefreshing(): bool
     {
-        $oauth2->refreshAccessToken();
+        $this->oAuth2->refreshAccessToken();
 
-        $accessTokenExpireAt = $optionStore->getInt('wp_hubspot_importer_access_token_expire_at');
+        $accessTokenExpireAt = $this->optionStore->getInt('wp_hubspot_importer_access_token_expire_at');
         $accessTokenExpireIn = $accessTokenExpireAt - time();
 
         if ($accessTokenExpireIn < 18000) { // 5 * 3600 = 18000 = 5 hours.
