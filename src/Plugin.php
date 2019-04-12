@@ -19,6 +19,7 @@ class Plugin
         });
 
         // TODO: Refactor!
+        // TODO: Find a way not to run it on every page load.
         add_action('wp', function (): void {
             $action = null;
 
