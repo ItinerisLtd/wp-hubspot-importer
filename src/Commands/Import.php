@@ -72,7 +72,7 @@ class Import
             $blogPost = new BlogPost($original);
             $this->importer->import($blogPost);
 
-            WP_CLI::success('Imported: ' . $blogPost->getHubSpotBlogPostId());
+            WP_CLI::success('Imported: ' . $blogPost->getHubSpotId());
         }, $data->objects);
 
         return [

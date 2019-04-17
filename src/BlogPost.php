@@ -15,7 +15,7 @@ class BlogPost
         $this->original = $original;
     }
 
-    public function getHubSpotBlogPostId(): string
+    public function getHubSpotId(): string
     {
         return sanitize_text_field($this->original->id);
     }

@@ -46,7 +46,7 @@ class BlogPostRepo
             'post_date_gmt' => $blogPost->getPostDateGmt(),
             'post_modified_gmt' => $blogPost->getPostDateGmt(),
             'meta_input' => [
-                $this->hubspotBlogPostIdMetaKey => $blogPost->getHubSpotBlogPostId(),
+                $this->hubspotBlogPostIdMetaKey => $blogPost->getHubSpotId(),
                 $this->hubspotFeaturedImageUrlMetaKey => $blogPost->getFeaturedImageUrl(),
             ],
         ]);
@@ -66,7 +66,7 @@ class BlogPostRepo
 
     protected function getPostId(BlogPost $blogPost): int
     {
-        $hubSpotBlogPostId = $blogPost->getHubSpotBlogPostId();
+        $hubSpotBlogPostId = $blogPost->getHubSpotId();
 
         if (! array_key_exists($hubSpotBlogPostId, $this->mapping)) {
             $query = new WP_Query([
