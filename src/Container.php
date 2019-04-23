@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace Itineris\WPHubSpotImporter;
 
 use Itineris\WPHubSpotImporter\Admin\SettingsPage;
-use RuntimeException;
 use SevenShores\Hubspot\Factory as HubSpotFactory;
 use SevenShores\Hubspot\Http\Client;
 use SevenShores\Hubspot\Resources\BlogPosts;
@@ -13,6 +12,7 @@ use SevenShores\Hubspot\Resources\OAuth2 as HubSpotOauth2;
 use TypistTech\WPKsesView\Factory as ViewFactory;
 use TypistTech\WPOptionStore\Factory as OptionStoreFactory;
 use TypistTech\WPOptionStore\OptionStoreInterface;
+use UnexpectedValueException;
 
 /**
  * TODO: Find a better alternative, maybe `typisttech/wp-contained-hook`.
@@ -59,10 +59,14 @@ class Container
             );
 
             if (! $instance instanceof self) {
-                $klass = get_class($instance);
-                throw new RuntimeException(
-                    "'wp_hubspot_importer_contain_init' expecting an instance of 'Container'. However, '$klass' given."
+                $message = sprintf(
+                    'Filter "%1$s" should return an instance of "%2$s", instance of "%3$s" given.',
+                    'wp_hubspot_importer_container_init',
+                    __CLASS__,
+                    is_object($instance) ? get_class($instance) : gettype($instance)
                 );
+
+                throw new UnexpectedValueException($message);
             }
             static::$instance = $instance;
         }
