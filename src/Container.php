@@ -7,6 +7,7 @@ use Itineris\WPHubSpotImporter\Admin\SettingsPage;
 use SevenShores\Hubspot\Factory as HubSpotFactory;
 use SevenShores\Hubspot\Http\Client;
 use SevenShores\Hubspot\Resources\BlogPosts;
+use SevenShores\Hubspot\Resources\BlogTopics;
 use SevenShores\Hubspot\Resources\OAuth2 as HubSpotOauth2;
 use TypistTech\WPKsesView\Factory as ViewFactory;
 use TypistTech\WPOptionStore\Factory as OptionStoreFactory;
@@ -35,6 +36,10 @@ class Container
     protected $blogPosts;
     /** @var Importer */
     protected $importer;
+    /** @var BlogTopicRepo */
+    protected $blogTopicRepo;
+    /** @var BlogTopics */
+    protected $blogTopics;
 
     public static function getInstance(): Container
     {
@@ -164,5 +169,24 @@ class Container
         }
 
         return $this->hubSpotFactory;
+    }
+
+    public function getBlogTopicRepo(): BlogTopicRepo
+    {
+        if (null === $this->blogTopicRepo) {
+            $this->blogTopicRepo = new BlogTopicRepo();
+        }
+
+        return $this->blogTopicRepo;
+    }
+
+    public function getBlogTopics(): BlogTopics
+    {
+        if (null === $this->blogTopics) {
+            $hubSpotFactory = $this->getHubSpotFactory();
+            $this->blogTopics = $hubSpotFactory->blogTopics();
+        }
+
+        return $this->blogTopics;
     }
 }
