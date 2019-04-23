@@ -23,4 +23,4 @@ workflows:
           name: phpstan-analyse
           post-steps:
             - composer/exec:
-                command: phpstan:analyse
+                command: phpstan:analyse -- --memory-limit 999999999
