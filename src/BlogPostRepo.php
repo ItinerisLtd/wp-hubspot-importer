@@ -10,7 +10,11 @@ use WP_User;
 
 class BlogPostRepo
 {
-    /** @var string */
+    /**
+     * Must be non-hierarchical.
+     *
+     * @var string
+     */
     public $topicTaxonomy;
     /** @var string */
     protected $postType;

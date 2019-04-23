@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Itineris\WPHubSpotImporter;
 
 use Itineris\WPHubSpotImporter\Admin\SettingsPage;
+use RuntimeException;
 use SevenShores\Hubspot\Factory as HubSpotFactory;
 use SevenShores\Hubspot\Http\Client;
 use SevenShores\Hubspot\Resources\BlogPosts;
@@ -18,6 +19,14 @@ use TypistTech\WPOptionStore\OptionStoreInterface;
  */
 class Container
 {
+    protected const BLOG_POST_POST_TYPE = 'post';
+    protected const HUBSPOT_BLOG_POST_ID_META_KEY = '_hubspot_blog_post_id';
+    protected const HUBSPOT_FEATURED_IMAGE_URL_META_KEY = 'hubspot_featured_image_url';
+    /**
+     * Must be non-hierarchical.
+     */
+    protected const TOPIC_TAXONOMY = 'post_tag';
+
     /** @var Container */
     protected static $instance;
     /** @var SettingsPage */
@@ -41,11 +50,21 @@ class Container
     /** @var BlogTopics */
     protected $blogTopics;
 
-    public static function getInstance(): Container
+    public static function getInstance(): self
     {
         if (null === static::$instance) {
-            // TODO: Allow customization, i.e: filters.
-            static::$instance = new static();
+            $instance = apply_filters(
+                'wp_hubspot_importer_contain_init',
+                new static()
+            );
+
+            if (! $instance instanceof self) {
+                $klass = get_class($instance);
+                throw new RuntimeException(
+                    "'wp_hubspot_importer_contain_init' expecting an instance of 'Container'. However, '$klass' given."
+                );
+            }
+            static::$instance = $instance;
         }
 
         return static::$instance;
@@ -113,12 +132,11 @@ class Container
     protected function getBlogPostRepo(): BlogPostRepo
     {
         if (null === $this->blogPostRepo) {
-            // TODO: Allow customization, i.e: filters.
             $this->blogPostRepo = new BlogPostRepo(
-                'post',
-                '_hubspot_blog_post_id',
-                'hubspot_featured_image_url',
-                'post_tag'
+                static::BLOG_POST_POST_TYPE,
+                static::HUBSPOT_BLOG_POST_ID_META_KEY,
+                static::HUBSPOT_FEATURED_IMAGE_URL_META_KEY,
+                static::TOPIC_TAXONOMY
             );
         }
 
@@ -132,6 +150,15 @@ class Container
         }
 
         return $this->authorRepo;
+    }
+
+    public function getBlogTopicRepo(): BlogTopicRepo
+    {
+        if (null === $this->blogTopicRepo) {
+            $this->blogTopicRepo = new BlogTopicRepo();
+        }
+
+        return $this->blogTopicRepo;
     }
 
     public function getBlogPosts(): BlogPosts
@@ -170,15 +197,6 @@ class Container
         }
 
         return $this->hubSpotFactory;
-    }
-
-    public function getBlogTopicRepo(): BlogTopicRepo
-    {
-        if (null === $this->blogTopicRepo) {
-            $this->blogTopicRepo = new BlogTopicRepo();
-        }
-
-        return $this->blogTopicRepo;
     }
 
     public function getBlogTopics(): BlogTopics
