@@ -1,0 +1,11 @@
+### Composer ###
+/vendor/
+
+### PhpStorm ###
+/.idea/
+
+### composer release:build ###
+/release/
+
+### PHPStan ###
+/wordpress/
