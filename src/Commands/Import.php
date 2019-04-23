@@ -41,9 +41,9 @@ class Import
         $this->blogTopics = $container->getBlogTopics();
         $this->blogTopicRepo = $container->getBlogTopicRepo();
 
-        // TODO: update tags info.
         WP_CLI::log('Fetching HubSpot blog topics...');
 
+        // TODO: Save topics into database. Currently, we are expecting small numbers of topics only.
         $blogTopicBatchIndex = 0;
         do {
             $remaining = $this->fetchSingleBlogTopicBatch($blogTopicBatchIndex++);

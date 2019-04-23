@@ -14,11 +14,14 @@ class Importer
     protected $blogPostRepo;
     /** @var AuthorRepo */
     protected $authorRepo;
+    /** @var BlogTopicRepo */
+    protected $blogTopicRepo;
 
-    public function __construct(BlogPostRepo $blogPostRepo, AuthorRepo $authorRepo)
+    public function __construct(BlogPostRepo $blogPostRepo, AuthorRepo $authorRepo, BlogTopicRepo $blogTopicRepo)
     {
         $this->blogPostRepo = $blogPostRepo;
         $this->authorRepo = $authorRepo;
+        $this->blogTopicRepo = $blogTopicRepo;
     }
 
     public function import(BlogPost $blogPost): void
@@ -26,8 +29,11 @@ class Importer
         switch ($this->whatToDo($blogPost)) {
             case static::CREATE_POST:
             case static::UPDATE_POST:
-                $author = $this->authorRepo->upsertFrom($blogPost);
-                $this->blogPostRepo->upsert($blogPost, $author);
+                $this->blogPostRepo->upsert(
+                    $blogPost,
+                    $this->authorRepo->upsertFrom($blogPost),
+                    ...$this->blogTopicRepo->find(...$blogPost->getTopicsIds())
+                );
                 break;
             case static::DELETE_POST:
                 $this->blogPostRepo->delete($blogPost);

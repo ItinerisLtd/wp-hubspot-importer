@@ -33,7 +33,7 @@ class BlogPostRepo
         $this->topicTaxonomy = $topicTaxonomy;
     }
 
-    public function upsert(BlogPost $blogPost, WP_User $author): void
+    public function upsert(BlogPost $blogPost, WP_User $author, BlogTopic ...$blogTopics): void
     {
         $postId = wp_insert_post([
             'ID' => $this->getPostId($blogPost),
@@ -57,9 +57,15 @@ class BlogPostRepo
             );
         }
 
+        $topics = array_map(function (BlogTopic $blogTopic): string {
+            // TODO: Handle commas.
+            return $blogTopic->getName();
+        }, $blogTopics);
+
         wp_set_post_terms(
             $postId,
-            $blogPost->getTopics(),
+            // TODO: Handle commas.
+            implode(', ', $topics),
             $this->topicTaxonomy
         );
     }

@@ -102,7 +102,8 @@ class Container
         if (null === $this->importer) {
             $this->importer = new Importer(
                 $this->getBlogPostRepo(),
-                $this->getAuthorRepo()
+                $this->getAuthorRepo(),
+                $this->getBlogTopicRepo()
             );
         }
 
