@@ -1,6 +1,11 @@
 # Change Log
 
+## [0.1.0](https://github.com/ItinerisLtd/wp-hubspot-importer/tree/0.1.0) (2019-04-23)
+[Full Changelog](https://github.com/ItinerisLtd/wp-hubspot-importer/compare/0.1.0...0.1.0)
 
+**Merged pull requests:**
+
+- refactor take 2 [\#4](https://github.com/ItinerisLtd/wp-hubspot-importer/pull/4) ([TangRufus](https://github.com/TangRufus))
 
 
 

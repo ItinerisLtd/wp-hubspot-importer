@@ -2,8 +2,8 @@
 /**
  * Plugin Name:     WP HubSpot Importer
  * Plugin URI:      https://github.com/ItinerisLtd/wp-hubspot-importer
- * Description:     TODO.
- * Version:         0.0.0
+ * Description:     Import HubSpot blog posts into WordPress.
+ * Version:         0.1.0
  * Author:          Itineris Limited
  * Author URI:      https://itineris.co.uk
  * License:         MIT

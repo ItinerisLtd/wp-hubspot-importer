@@ -1,7 +1,7 @@
 {
     "name": "itinerisltd/wp-hubspot-importer",
     "type": "wordpress-plugin",
-    "description": "TODO.",
+    "description": "Import HubSpot blog posts into WordPress.",
     "keywords": [
         "hubspot",
         "wordpress",
