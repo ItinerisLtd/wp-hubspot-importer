@@ -1,6 +1,14 @@
 # Change Log
 
+## [0.1.0](https://github.com/ItinerisLtd/wp-hubspot-importer/tree/0.1.0) (2019-04-23)
+**Merged pull requests:**
 
+- Allow changing container [\#7](https://github.com/ItinerisLtd/wp-hubspot-importer/pull/7) ([TangRufus](https://github.com/TangRufus))
+- Refactor; Handle tags [\#6](https://github.com/ItinerisLtd/wp-hubspot-importer/pull/6) ([TangRufus](https://github.com/TangRufus))
+- off work [\#5](https://github.com/ItinerisLtd/wp-hubspot-importer/pull/5) ([TangRufus](https://github.com/TangRufus))
+- refactor take 2 [\#4](https://github.com/ItinerisLtd/wp-hubspot-importer/pull/4) ([TangRufus](https://github.com/TangRufus))
+- refactor [\#3](https://github.com/ItinerisLtd/wp-hubspot-importer/pull/3) ([TangRufus](https://github.com/TangRufus))
+- Impoter [\#1](https://github.com/ItinerisLtd/wp-hubspot-importer/pull/1) ([TangRufus](https://github.com/TangRufus))
 
 
 

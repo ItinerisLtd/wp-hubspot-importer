@@ -7,14 +7,37 @@
 [![GitHub License](https://img.shields.io/github/license/itinerisltd/wp-hubspot-importer.svg)](https://github.com/ItinerisLtd/wp-hubspot-importer/blob/master/LICENSE)
 [![Hire Itineris](https://img.shields.io/badge/Hire-Itineris-ff69b4.svg)](https://www.itineris.co.uk/contact/)
 
-
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
 
+- [Goal](#goal)
+- [Minimum Requirements](#minimum-requirements)
+- [Installation](#installation)
+  - [Composer (Recommended)](#composer-recommended)
+  - [Classic](#classic)
+- [Usage](#usage)
+  - [OAuth2 Authorization](#oauth2-authorization)
+  - [Importing from HubSpot to WordPress](#importing-from-hubspot-to-wordpress)
+- [Data Structure](#data-structure)
+  - [HubSpot Blog Post ID](#hubspot-blog-post-id)
+  - [Featured Image URL](#featured-image-url)
+- [FAQ](#faq)
+  - [Will you add support for older PHP versions?](#will-you-add-support-for-older-php-versions)
+  - [It looks awesome. Where can I find some more goodies like this?](#it-looks-awesome-where-can-i-find-some-more-goodies-like-this)
+  - [Besides wp.org, where can I give a :star::star::star::star::star: review?](#besides-wporg-where-can-i-give-a-starstarstarstarstar-review)
+- [Testing](#testing)
+- [Feedback](#feedback)
+- [Change Log](#change-log)
+- [Security](#security)
+- [Credits](#credits)
+- [License](#license)
+
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 ## Goal
+
+Import HubSpot blog posts into WordPress.
 
 ## Minimum Requirements
 
