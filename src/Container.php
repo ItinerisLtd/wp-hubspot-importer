@@ -7,6 +7,7 @@ use Itineris\WPHubSpotImporter\Admin\SettingsPage;
 use SevenShores\Hubspot\Factory as HubSpotFactory;
 use SevenShores\Hubspot\Http\Client;
 use SevenShores\Hubspot\Resources\BlogPosts;
+use SevenShores\Hubspot\Resources\BlogTopics;
 use SevenShores\Hubspot\Resources\OAuth2 as HubSpotOauth2;
 use TypistTech\WPKsesView\Factory as ViewFactory;
 use TypistTech\WPOptionStore\Factory as OptionStoreFactory;
@@ -23,8 +24,8 @@ class Container
     protected $settingsPage;
     /** @var HubSpotFactory */
     protected $hubSpotFactory;
-    /** @var UserRepo */
-    protected $userRepo;
+    /** @var AuthorRepo */
+    protected $authorRepo;
     /** @var BlogPostRepo */
     protected $blogPostRepo;
     /** @var OAuth2 */
@@ -35,6 +36,10 @@ class Container
     protected $blogPosts;
     /** @var Importer */
     protected $importer;
+    /** @var BlogTopicRepo */
+    protected $blogTopicRepo;
+    /** @var BlogTopics */
+    protected $blogTopics;
 
     public static function getInstance(): Container
     {
@@ -97,7 +102,8 @@ class Container
         if (null === $this->importer) {
             $this->importer = new Importer(
                 $this->getBlogPostRepo(),
-                $this->getUserRepo()
+                $this->getAuthorRepo(),
+                $this->getBlogTopicRepo()
             );
         }
 
@@ -119,13 +125,13 @@ class Container
         return $this->blogPostRepo;
     }
 
-    protected function getUserRepo(): UserRepo
+    protected function getAuthorRepo(): AuthorRepo
     {
-        if (null === $this->userRepo) {
-            $this->userRepo = new UserRepo();
+        if (null === $this->authorRepo) {
+            $this->authorRepo = new AuthorRepo();
         }
 
-        return $this->userRepo;
+        return $this->authorRepo;
     }
 
     public function getBlogPosts(): BlogPosts
@@ -164,5 +170,24 @@ class Container
         }
 
         return $this->hubSpotFactory;
+    }
+
+    public function getBlogTopicRepo(): BlogTopicRepo
+    {
+        if (null === $this->blogTopicRepo) {
+            $this->blogTopicRepo = new BlogTopicRepo();
+        }
+
+        return $this->blogTopicRepo;
+    }
+
+    public function getBlogTopics(): BlogTopics
+    {
+        if (null === $this->blogTopics) {
+            $hubSpotFactory = $this->getHubSpotFactory();
+            $this->blogTopics = $hubSpotFactory->blogTopics();
+        }
+
+        return $this->blogTopics;
     }
 }

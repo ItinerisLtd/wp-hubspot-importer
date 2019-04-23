@@ -33,7 +33,7 @@ class BlogPostRepo
         $this->topicTaxonomy = $topicTaxonomy;
     }
 
-    public function upsert(BlogPost $blogPost, WP_User $author): void
+    public function upsert(BlogPost $blogPost, WP_User $author, BlogTopic ...$blogTopics): void
     {
         $postId = wp_insert_post([
             'ID' => $this->getPostId($blogPost),
@@ -46,7 +46,7 @@ class BlogPostRepo
             'post_date_gmt' => $blogPost->getPostDateGmt(),
             'post_modified_gmt' => $blogPost->getPostDateGmt(),
             'meta_input' => [
-                $this->hubspotBlogPostIdMetaKey => $blogPost->getHubSpotBlogPostId(),
+                $this->hubspotBlogPostIdMetaKey => $blogPost->getHubSpotId(),
                 $this->hubspotFeaturedImageUrlMetaKey => $blogPost->getFeaturedImageUrl(),
             ],
         ]);
@@ -57,16 +57,22 @@ class BlogPostRepo
             );
         }
 
+        $topics = array_map(function (BlogTopic $blogTopic): string {
+            // TODO: Handle commas.
+            return $blogTopic->getName();
+        }, $blogTopics);
+
         wp_set_post_terms(
             $postId,
-            $blogPost->getTopics(),
+            // TODO: Handle commas.
+            implode(', ', $topics),
             $this->topicTaxonomy
         );
     }
 
     protected function getPostId(BlogPost $blogPost): int
     {
-        $hubSpotBlogPostId = $blogPost->getHubSpotBlogPostId();
+        $hubSpotBlogPostId = $blogPost->getHubSpotId();
 
         if (! array_key_exists($hubSpotBlogPostId, $this->mapping)) {
             $query = new WP_Query([

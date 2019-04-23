@@ -15,7 +15,7 @@ class BlogPost
         $this->original = $original;
     }
 
-    public function getHubSpotBlogPostId(): string
+    public function getHubSpotId(): string
     {
         return sanitize_text_field($this->original->id);
     }
@@ -54,13 +54,9 @@ class BlogPost
         );
     }
 
-    public function getTopics(): string
+    public function getTopicsIds(): array
     {
-        $topicIds = array_map(function ($topicId): string {
-            return 'topic_' . sanitize_text_field($topicId);
-        }, $this->original->topic_ids);
-
-        return implode($topicIds, ', ');
+        return array_map('sanitize_text_field', $this->original->topic_ids);
     }
 
     public function getPostModifiedGmt(): string

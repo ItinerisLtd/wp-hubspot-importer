@@ -7,7 +7,7 @@ use RuntimeException;
 use WP_Error;
 use WP_User;
 
-class UserRepo
+class AuthorRepo
 {
     /** @var WP_User[] */
     protected $mapping = [];
@@ -17,12 +17,12 @@ class UserRepo
         $username = $blogPost->getAuthorUsername();
 
         if (! array_key_exists($username, $this->mapping)) {
-            $user = $this->upsert(
+            $author = $this->upsert(
                 $username,
                 $blogPost->getAuthorDisplayName()
             );
 
-            $this->mapping[$username] = $user;
+            $this->mapping[$username] = $author;
         }
 
         return $this->mapping[$username];
@@ -40,23 +40,23 @@ class UserRepo
             'nickname' => $displayName,
         ];
 
-        $userId = username_exists($username);
-        if (is_int($userId)) {
+        $wpUserId = username_exists($username);
+        if (is_int($wpUserId)) {
             // Update user info.
-            $args['ID'] = $userId;
+            $args['ID'] = $wpUserId;
         } else {
             // Create new user.
             $args['user_pass'] = wp_generate_password(64);
         }
 
-        $userId = wp_insert_user($args);
+        $wpUserId = wp_insert_user($args);
 
-        if ($userId instanceof WP_Error) {
+        if ($wpUserId instanceof WP_Error) {
             throw new RuntimeException(
-                $userId->get_error_message()
+                $wpUserId->get_error_message()
             );
         }
 
-        return new WP_User($userId);
+        return new WP_User($wpUserId);
     }
 }
