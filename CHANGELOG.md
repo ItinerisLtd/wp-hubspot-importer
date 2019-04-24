@@ -1,10 +1,16 @@
 # Change Log
 
-## [0.1.0](https://github.com/ItinerisLtd/wp-hubspot-importer/tree/0.1.0) (2019-04-23)
-[Full Changelog](https://github.com/ItinerisLtd/wp-hubspot-importer/compare/0.1.0...0.1.0)
+## [0.1.1](https://github.com/ItinerisLtd/wp-hubspot-importer/tree/0.1.1) (2019-04-24)
+[Full Changelog](https://github.com/ItinerisLtd/wp-hubspot-importer/compare/0.1.0...0.1.1)
 
 **Merged pull requests:**
 
+- Container: Better error message [\#9](https://github.com/ItinerisLtd/wp-hubspot-importer/pull/9) ([TangRufus](https://github.com/TangRufus))
+
+## [0.1.0](https://github.com/ItinerisLtd/wp-hubspot-importer/tree/0.1.0) (2019-04-23)
+**Merged pull requests:**
+
+- Version bump 0.1.0 [\#8](https://github.com/ItinerisLtd/wp-hubspot-importer/pull/8) ([TangRufus](https://github.com/TangRufus))
 - refactor take 2 [\#4](https://github.com/ItinerisLtd/wp-hubspot-importer/pull/4) ([TangRufus](https://github.com/TangRufus))
 
 

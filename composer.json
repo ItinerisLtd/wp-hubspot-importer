@@ -68,7 +68,7 @@
             "@phpstan:analyse",
             "@style:check"
         ],
-        "phpstan:analyse": "phpstan analyse",
+        "phpstan:analyse": "phpstan analyse --memory-limit=999999999",
         "pretag": [
             "composer update",
             "@phpstan:analyse",
