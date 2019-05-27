@@ -4,10 +4,11 @@
     "description": "Import HubSpot blog posts into WordPress.",
     "keywords": [
         "hubspot",
+        "import",
         "wordpress",
         "wp"
     ],
-    "homepage": "https://itinerisltd.github.io/wp-hubspot-importer/",
+    "homepage": "https://github.com/itinerisltd/wp-hubspot-importer",
     "license": "MIT",
     "authors": [
         {
