@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "021672063b86eed54d152c60ff1b3e48",
+    "content-hash": "97d8463f2e8a3eea2ffed1d075f5d372",
     "packages": [
         {
             "name": "guzzlehttp/guzzle",
@@ -1809,7 +1809,8 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/WordPress/WordPress/zipball/5.2.1"
+                "url": "https://api.github.com/repos/WordPress/WordPress/zipball/5.2.1",
+                "reference": "5.2.1"
             },
             "require": {
                 "php": ">=5.3.2",

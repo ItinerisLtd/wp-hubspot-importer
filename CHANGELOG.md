@@ -1,10 +1,24 @@
 # Change Log
 
+## [0.2.0](https://github.com/ItinerisLtd/wp-hubspot-importer/tree/0.2.0) (2019-05-27)
+[Full Changelog](https://github.com/ItinerisLtd/wp-hubspot-importer/compare/0.1.1...0.2.0)
+
+**Merged pull requests:**
+
+- Fix `composer.json` [\#20](https://github.com/ItinerisLtd/wp-hubspot-importer/pull/20) ([TangRufus](https://github.com/TangRufus))
+- Add `post\_action\_pull-hubspot` [\#19](https://github.com/ItinerisLtd/wp-hubspot-importer/pull/19) ([TangRufus](https://github.com/TangRufus))
+- Build\(deps-dev\): Bump roots/wordpress from 5.1.1 to 5.2.1 [\#18](https://github.com/ItinerisLtd/wp-hubspot-importer/pull/18) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
+- Build\(deps\): Bump nikic/php-parser from 4.2.1 to 4.2.2 [\#16](https://github.com/ItinerisLtd/wp-hubspot-importer/pull/16) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
+- Build\(deps-dev\): Bump wp-cli/wp-cli from 2.1.0 to 2.2.0 [\#15](https://github.com/ItinerisLtd/wp-hubspot-importer/pull/15) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
+- Build\(deps\): Bump symfony/console from 4.2.7 to 4.2.8 [\#14](https://github.com/ItinerisLtd/wp-hubspot-importer/pull/14) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
+- Add dependabot [\#13](https://github.com/ItinerisLtd/wp-hubspot-importer/pull/13) ([TangRufus](https://github.com/TangRufus))
+
 ## [0.1.1](https://github.com/ItinerisLtd/wp-hubspot-importer/tree/0.1.1) (2019-04-24)
 [Full Changelog](https://github.com/ItinerisLtd/wp-hubspot-importer/compare/0.1.0...0.1.1)
 
 **Merged pull requests:**
 
+- Version bump 0.1.1 [\#10](https://github.com/ItinerisLtd/wp-hubspot-importer/pull/10) ([TangRufus](https://github.com/TangRufus))
 - Container: Better error message [\#9](https://github.com/ItinerisLtd/wp-hubspot-importer/pull/9) ([TangRufus](https://github.com/TangRufus))
 
 ## [0.1.0](https://github.com/ItinerisLtd/wp-hubspot-importer/tree/0.1.0) (2019-04-23)
