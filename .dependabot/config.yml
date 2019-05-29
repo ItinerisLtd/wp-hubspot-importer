@@ -7,3 +7,6 @@ update_configs:
     allowed_updates:
       - match:
           update_type: all
+    automerged_updates:
+      - match:
+          update_type: all
