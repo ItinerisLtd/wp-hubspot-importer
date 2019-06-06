@@ -1,10 +1,24 @@
 # Change Log
 
+## [0.2.1](https://github.com/ItinerisLtd/wp-hubspot-importer/tree/0.2.1) (2019-06-06)
+[Full Changelog](https://github.com/ItinerisLtd/wp-hubspot-importer/compare/0.2.0...0.2.1)
+
+**Merged pull requests:**
+
+- composer update [\#28](https://github.com/ItinerisLtd/wp-hubspot-importer/pull/28) ([TangRufus](https://github.com/TangRufus))
+- BlogPost: Add filters [\#27](https://github.com/ItinerisLtd/wp-hubspot-importer/pull/27) ([TangRufus](https://github.com/TangRufus))
+- Bump symfony/finder from 4.2.9 to 4.3.0 [\#26](https://github.com/ItinerisLtd/wp-hubspot-importer/pull/26) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
+- Bump symfony/console from 4.2.9 to 4.3.0 [\#25](https://github.com/ItinerisLtd/wp-hubspot-importer/pull/25) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
+- dependabot: Enable `automerged\_updates` [\#24](https://github.com/ItinerisLtd/wp-hubspot-importer/pull/24) ([TangRufus](https://github.com/TangRufus))
+- Bump phpstan/phpstan from 0.11.7 to 0.11.8 [\#23](https://github.com/ItinerisLtd/wp-hubspot-importer/pull/23) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
+- Bump symfony/contracts from 1.1.0 to 1.1.1 [\#22](https://github.com/ItinerisLtd/wp-hubspot-importer/pull/22) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
+
 ## [0.2.0](https://github.com/ItinerisLtd/wp-hubspot-importer/tree/0.2.0) (2019-05-27)
 [Full Changelog](https://github.com/ItinerisLtd/wp-hubspot-importer/compare/0.1.1...0.2.0)
 
 **Merged pull requests:**
 
+- Version bump 0.2.0 [\#21](https://github.com/ItinerisLtd/wp-hubspot-importer/pull/21) ([TangRufus](https://github.com/TangRufus))
 - Fix `composer.json` [\#20](https://github.com/ItinerisLtd/wp-hubspot-importer/pull/20) ([TangRufus](https://github.com/TangRufus))
 - Add `post\_action\_pull-hubspot` [\#19](https://github.com/ItinerisLtd/wp-hubspot-importer/pull/19) ([TangRufus](https://github.com/TangRufus))
 - Build\(deps-dev\): Bump roots/wordpress from 5.1.1 to 5.2.1 [\#18](https://github.com/ItinerisLtd/wp-hubspot-importer/pull/18) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
