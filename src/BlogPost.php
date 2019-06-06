@@ -17,22 +17,38 @@ class BlogPost
 
     public function getHubSpotId(): string
     {
-        return sanitize_text_field($this->original->id);
+        return (string) apply_filters(
+            'wp_hubspot_importer_blog_post_hubspot_id',
+            sanitize_text_field($this->original->id),
+            $this
+        );
     }
 
     public function getPostContent(): string
     {
-        return wp_kses_post($this->original->post_body ?? '');
+        return (string) apply_filters(
+            'wp_hubspot_importer_blog_post_post_content',
+            wp_kses_post($this->original->post_body ?? ''),
+            $this
+        );
     }
 
     public function getPostExcerpt(): string
     {
-        return sanitize_text_field($this->original->post_summary ?? '');
+        return (string) apply_filters(
+            'wp_hubspot_importer_blog_post_post_excerpt',
+            sanitize_text_field($this->original->post_summary ?? ''),
+            $this
+        );
     }
 
     public function getPostTitle(): string
     {
-        return sanitize_text_field($this->original->page_title ?? '');
+        return (string) apply_filters(
+            'wp_hubspot_importer_blog_post_post_title',
+            sanitize_text_field($this->original->page_title ?? ''),
+            $this
+        );
     }
 
     public function getPostDateGmt(): string
@@ -40,23 +56,33 @@ class BlogPost
         $timestampMilliseconds = (int) ($this->original->publish_date ?? 0);
         $timestamp = (int) floor($timestampMilliseconds / 1000);
 
-        return gmdate('Y-m-d H:i:s', $timestamp);
+        return (string) apply_filters(
+            'wp_hubspot_importer_blog_post_post_date_gmt',
+            gmdate('Y-m-d H:i:s', $timestamp),
+            $this
+        );
     }
 
     public function getFeaturedImageUrl(): string
     {
-        return esc_url_raw(
+        $url = esc_url_raw(
             $this->original->featured_image ?? '',
             [
                 'http',
                 'https',
             ]
         );
+
+        return (string) apply_filters('wp_hubspot_importer_blog_post_featured_image_url', $url, $this);
     }
 
     public function getTopicsIds(): array
     {
-        return array_map('sanitize_text_field', $this->original->topic_ids);
+        return (array) apply_filters(
+            'wp_hubspot_importer_blog_post_topics_ids',
+            array_map('sanitize_text_field', $this->original->topic_ids),
+            $this
+        );
     }
 
     public function getPostModifiedGmt(): string
@@ -64,12 +90,20 @@ class BlogPost
         $timestampMilliseconds = (int) ($this->original->updated ?? 0);
         $timestamp = (int) floor($timestampMilliseconds / 1000);
 
-        return gmdate('Y-m-d H:i:s', $timestamp);
+        return (string) apply_filters(
+            'wp_hubspot_importer_blog_post_post_modified_gmt',
+            gmdate('Y-m-d H:i:s', $timestamp),
+            $this
+        );
     }
 
     public function isPublished(): bool
     {
-        return 'PUBLISHED' === sanitize_text_field($this->original->state);
+        return (bool) apply_filters(
+            'wp_hubspot_importer_blog_post_is_published',
+            'PUBLISHED' === sanitize_text_field($this->original->state),
+            $this
+        );
     }
 
     public function getAuthorUsername(): string
@@ -77,13 +111,21 @@ class BlogPost
         $authorOriginal = $this->original->blog_author ?? new stdClass();
         $id = $authorOriginal->id ?? 'unknown_id';
 
-        return sanitize_user("hubspot_${id}", true);
+        return (string) apply_filters(
+            'wp_hubspot_importer_blog_post_author_username',
+            sanitize_user("hubspot_${id}", true),
+            $this
+        );
     }
 
     public function getAuthorDisplayName(): string
     {
         $authorOriginal = $this->original->blog_author ?? new stdClass();
 
-        return sanitize_text_field($authorOriginal->display_name ?? 'Unknown Author');
+        return (string) apply_filters(
+            'wp_hubspot_importer_blog_post_author_display_name',
+            sanitize_text_field($authorOriginal->display_name ?? 'Unknown Author'),
+            $this
+        );
     }
 }
