@@ -1,10 +1,18 @@
 # Change Log
 
+## [0.3.2](https://github.com/ItinerisLtd/wp-hubspot-importer/tree/0.3.2) (2019-06-13)
+[Full Changelog](https://github.com/ItinerisLtd/wp-hubspot-importer/compare/0.3.1...0.3.2)
+
+**Merged pull requests:**
+
+- Fix: `BlogPostRepo::getPostId\(\)` searches other `post\_status` [\#40](https://github.com/ItinerisLtd/wp-hubspot-importer/pull/40) ([TangRufus](https://github.com/TangRufus))
+
 ## [0.3.1](https://github.com/ItinerisLtd/wp-hubspot-importer/tree/0.3.1) (2019-06-13)
 [Full Changelog](https://github.com/ItinerisLtd/wp-hubspot-importer/compare/0.3.0...0.3.1)
 
 **Merged pull requests:**
 
+- Version bump 0.3.1 [\#39](https://github.com/ItinerisLtd/wp-hubspot-importer/pull/39) ([TangRufus](https://github.com/TangRufus))
 - Add `BlogPost::getOriginal\(\)` [\#38](https://github.com/ItinerisLtd/wp-hubspot-importer/pull/38) ([TangRufus](https://github.com/TangRufus))
 
 ## [0.3.0](https://github.com/ItinerisLtd/wp-hubspot-importer/tree/0.3.0) (2019-06-13)
