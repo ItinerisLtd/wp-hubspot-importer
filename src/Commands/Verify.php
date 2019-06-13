@@ -13,10 +13,10 @@ use WP_CLI;
  */
 class Verify
 {
-    /** @var OptionStoreInterface */
-    private $optionStore;
     /** @var OAuth2 */
     protected $oAuth2;
+    /** @var OptionStoreInterface */
+    private $optionStore;
 
     public function __invoke(): void
     {

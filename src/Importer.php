@@ -26,33 +26,10 @@ class Importer
 
     public function import(BlogPost $blogPost): void
     {
-        switch ($this->whatToDo($blogPost)) {
-            case static::CREATE_POST:
-            case static::UPDATE_POST:
-                $this->blogPostRepo->upsert(
-                    $blogPost,
-                    $this->authorRepo->upsertFrom($blogPost),
-                    ...$this->blogTopicRepo->find(...$blogPost->getTopicsIds())
-                );
-                break;
-            case static::DELETE_POST:
-                $this->blogPostRepo->delete($blogPost);
-                break;
-        }
-    }
-
-    protected function whatToDo(BlogPost $blogPost): int
-    {
-        if ($blogPost->isPublished()) {
-            $whatToDo = $this->blogPostRepo->isPreviouslyImported($blogPost)
-                ? static::UPDATE_POST
-                : static::CREATE_POST;
-        } else {
-            $whatToDo = $this->blogPostRepo->isPreviouslyImported($blogPost)
-                ? static::DELETE_POST
-                : static::DO_NOTHING;
-        }
-
-        return (int) apply_filters('wp_hubspot_importer_importer_what_to_do', $whatToDo, $blogPost);
+        $this->blogPostRepo->upsert(
+            $blogPost,
+            $this->authorRepo->upsertFrom($blogPost),
+            ...$this->blogTopicRepo->find(...$blogPost->getTopicsIds())
+        );
     }
 }

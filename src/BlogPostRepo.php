@@ -44,7 +44,7 @@ class BlogPostRepo
             'post_author' => $author->ID,
             'post_content' => $blogPost->getPostContent(),
             'post_excerpt' => $blogPost->getPostExcerpt(),
-            'post_status' => 'publish',
+            'post_status' => $blogPost->getPostStatus(),
             'post_title' => $blogPost->getPostTitle(),
             'post_type' => $this->postType,
             'post_date_gmt' => $blogPost->getPostDateGmt(),

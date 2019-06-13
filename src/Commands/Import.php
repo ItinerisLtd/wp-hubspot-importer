@@ -17,7 +17,7 @@ use WP_CLI;
 class Import
 {
     protected const LIMIT = 20;
-
+    protected const LAST_IMPORTED_AT_OPTION_NAME = 'wp_hubspot_importer_last_imported_at';
     /** @var OptionStoreInterface */
     protected $optionStore;
     /** @var BlogPosts */
@@ -62,8 +62,6 @@ class Import
         WP_CLI::success('Finished at ' . date(DATE_RFC2822, $time));
     }
 
-    protected const LAST_IMPORTED_AT_OPTION_NAME = 'wp_hubspot_importer_last_imported_at';
-
     protected function fetchSingleBlogTopicBatch(int $batchIndex): int
     {
         $response = $this->blogTopics->all([
@@ -105,6 +103,7 @@ class Import
             'limit' => static::LIMIT,
             'offset' => static::LIMIT * $batchIndex,
             'updated__gt' => $lastImportedAt * 1000,
+            'deleted_at__lt' => PHP_INT_MAX,
         ]);
 
         $data = $response->getData();
