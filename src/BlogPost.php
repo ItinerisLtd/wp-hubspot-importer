@@ -123,7 +123,7 @@ class BlogPost
     public function getPostStatus(): string
     {
         $state = sanitize_text_field($this->original->state);
-        switch($state) {
+        switch ($state) {
             case 'PUBLISHED':
                 $status = 'publish';
                 break;
