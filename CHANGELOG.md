@@ -1,14 +1,25 @@
 # Change Log
 
+## [0.2.2](https://github.com/ItinerisLtd/wp-hubspot-importer/tree/0.2.2) (2019-06-13)
+[Full Changelog](https://github.com/ItinerisLtd/wp-hubspot-importer/compare/0.2.1...0.2.2)
+
+**Merged pull requests:**
+
+- Importer: Add `wp\_hubspot\_importer\_importer\_what\_to\_do` filter [\#33](https://github.com/ItinerisLtd/wp-hubspot-importer/pull/33) ([TangRufus](https://github.com/TangRufus))
+- Bump phpstan/phpdoc-parser from 0.3.4 to 0.3.5 [\#32](https://github.com/ItinerisLtd/wp-hubspot-importer/pull/32) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
+- Bump symfony/finder from 4.3.0 to 4.3.1 [\#31](https://github.com/ItinerisLtd/wp-hubspot-importer/pull/31) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
+- Bump symfony/console from 4.3.0 to 4.3.1 [\#30](https://github.com/ItinerisLtd/wp-hubspot-importer/pull/30) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
+- Bump symfony/console from 4.2.9 to 4.3.0 [\#25](https://github.com/ItinerisLtd/wp-hubspot-importer/pull/25) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
+
 ## [0.2.1](https://github.com/ItinerisLtd/wp-hubspot-importer/tree/0.2.1) (2019-06-06)
 [Full Changelog](https://github.com/ItinerisLtd/wp-hubspot-importer/compare/0.2.0...0.2.1)
 
 **Merged pull requests:**
 
+- Version bump 0.2.1 [\#29](https://github.com/ItinerisLtd/wp-hubspot-importer/pull/29) ([TangRufus](https://github.com/TangRufus))
 - composer update [\#28](https://github.com/ItinerisLtd/wp-hubspot-importer/pull/28) ([TangRufus](https://github.com/TangRufus))
 - BlogPost: Add filters [\#27](https://github.com/ItinerisLtd/wp-hubspot-importer/pull/27) ([TangRufus](https://github.com/TangRufus))
 - Bump symfony/finder from 4.2.9 to 4.3.0 [\#26](https://github.com/ItinerisLtd/wp-hubspot-importer/pull/26) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
-- Bump symfony/console from 4.2.9 to 4.3.0 [\#25](https://github.com/ItinerisLtd/wp-hubspot-importer/pull/25) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
 - dependabot: Enable `automerged\_updates` [\#24](https://github.com/ItinerisLtd/wp-hubspot-importer/pull/24) ([TangRufus](https://github.com/TangRufus))
 - Bump phpstan/phpstan from 0.11.7 to 0.11.8 [\#23](https://github.com/ItinerisLtd/wp-hubspot-importer/pull/23) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
 - Bump symfony/contracts from 1.1.0 to 1.1.1 [\#22](https://github.com/ItinerisLtd/wp-hubspot-importer/pull/22) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
