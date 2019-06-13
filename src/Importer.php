@@ -5,10 +5,10 @@ namespace Itineris\WPHubSpotImporter;
 
 class Importer
 {
-    protected const DO_NOTHING = 0;
-    protected const CREATE_POST = 1;
-    protected const UPDATE_POST = 2;
-    protected const DELETE_POST = 3;
+    public const DO_NOTHING = 0;
+    public const CREATE_POST = 1;
+    public const UPDATE_POST = 2;
+    public const DELETE_POST = 3;
 
     /** @var BlogPostRepo */
     protected $blogPostRepo;
@@ -44,13 +44,15 @@ class Importer
     protected function whatToDo(BlogPost $blogPost): int
     {
         if ($blogPost->isPublished()) {
-            return $this->blogPostRepo->isPreviouslyImported($blogPost)
+            $whatToDo = $this->blogPostRepo->isPreviouslyImported($blogPost)
                 ? static::UPDATE_POST
                 : static::CREATE_POST;
+        } else {
+            $whatToDo = $this->blogPostRepo->isPreviouslyImported($blogPost)
+                ? static::DELETE_POST
+                : static::DO_NOTHING;
         }
 
-        return $this->blogPostRepo->isPreviouslyImported($blogPost)
-            ? static::DELETE_POST
-            : static::DO_NOTHING;
+        return (int) apply_filters('wp_hubspot_importer_importer_what_to_do', $whatToDo, $blogPost);
     }
 }
