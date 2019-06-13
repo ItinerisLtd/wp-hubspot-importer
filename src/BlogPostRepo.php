@@ -82,6 +82,12 @@ class BlogPostRepo
             $query = new WP_Query([
                 'fields' => 'ids',
                 'post_type' => $this->postType,
+                'post_status' => [
+                    'publish',
+                    'draft',
+                    'future',
+                    'trash',
+                ],
                 'posts_per_page' => 1,
                 'meta_query' => [
                     [
