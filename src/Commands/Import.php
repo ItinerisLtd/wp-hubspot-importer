@@ -105,6 +105,7 @@ class Import
             'limit' => static::LIMIT,
             'offset' => static::LIMIT * $batchIndex,
             'updated__gt' => $lastImportedAt * 1000,
+            'deleted_at__lt' => PHP_INT_MAX,
         ]);
 
         $data = $response->getData();

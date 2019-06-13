@@ -97,15 +97,6 @@ class BlogPost
         );
     }
 
-    public function isPublished(): bool
-    {
-        return (bool) apply_filters(
-            'wp_hubspot_importer_blog_post_is_published',
-            'PUBLISHED' === sanitize_text_field($this->original->state),
-            $this
-        );
-    }
-
     public function getAuthorUsername(): string
     {
         $authorOriginal = $this->original->blog_author ?? new stdClass();
@@ -127,5 +118,27 @@ class BlogPost
             sanitize_text_field($authorOriginal->display_name ?? 'Unknown Author'),
             $this
         );
+    }
+
+    public function getPostStatus(): string
+    {
+        $state = sanitize_text_field($this->original->state);
+        switch($state) {
+            case 'PUBLISHED':
+                $status = 'publish';
+                break;
+            case 'SCHEDULED':
+                $status = 'future';
+                break;
+            default:
+                $status = 'draft';
+        }
+
+        $deletedAt = absint($this->original->deleted_at);
+        if ($deletedAt > 0) {
+            $status = 'trash';
+        }
+
+        return (string) apply_filters('wp_hubspot_importer_blog_post_status', $status, $this);
     }
 }
