@@ -141,4 +141,9 @@ class BlogPost
 
         return (string) apply_filters('wp_hubspot_importer_blog_post_status', $status, $this);
     }
+
+    public function getOriginal(): object
+    {
+        return $this->original;
+    }
 }
