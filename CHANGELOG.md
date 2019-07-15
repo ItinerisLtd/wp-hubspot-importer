@@ -1,10 +1,28 @@
 # Change Log
 
+## [0.4.0](https://github.com/ItinerisLtd/wp-hubspot-importer/tree/0.4.0) (2019-07-15)
+[Full Changelog](https://github.com/ItinerisLtd/wp-hubspot-importer/compare/0.3.2...0.4.0)
+
+**Merged pull requests:**
+
+- composer update [\#53](https://github.com/ItinerisLtd/wp-hubspot-importer/pull/53) ([TangRufus](https://github.com/TangRufus))
+- \[Danger\] BlogPost: Unconditionally trust HubSpot post content [\#52](https://github.com/ItinerisLtd/wp-hubspot-importer/pull/52) ([TangRufus](https://github.com/TangRufus))
+- Bump phpstan/phpstan from 0.11.9 to 0.11.12 [\#50](https://github.com/ItinerisLtd/wp-hubspot-importer/pull/50) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
+- Bump phpstan/phpstan from 0.11.9 to 0.11.11 [\#49](https://github.com/ItinerisLtd/wp-hubspot-importer/pull/49) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
+- Bump phpstan/phpstan from 0.11.8 to 0.11.9 [\#48](https://github.com/ItinerisLtd/wp-hubspot-importer/pull/48) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
+- Bump guzzlehttp/psr7 from 1.6.0 to 1.6.1 [\#47](https://github.com/ItinerisLtd/wp-hubspot-importer/pull/47) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
+- Bump guzzlehttp/psr7 from 1.5.2 to 1.6.0 [\#46](https://github.com/ItinerisLtd/wp-hubspot-importer/pull/46) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
+- Bump symfony/finder from 4.3.1 to 4.3.2 [\#45](https://github.com/ItinerisLtd/wp-hubspot-importer/pull/45) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
+- Bump symfony/console from 4.3.1 to 4.3.2 [\#44](https://github.com/ItinerisLtd/wp-hubspot-importer/pull/44) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
+- Bump symfony/service-contracts from 1.1.2 to 1.1.5 [\#43](https://github.com/ItinerisLtd/wp-hubspot-importer/pull/43) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
+- Bump roots/wordpress from 5.2.1 to 5.2.2 [\#42](https://github.com/ItinerisLtd/wp-hubspot-importer/pull/42) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
+
 ## [0.3.2](https://github.com/ItinerisLtd/wp-hubspot-importer/tree/0.3.2) (2019-06-13)
 [Full Changelog](https://github.com/ItinerisLtd/wp-hubspot-importer/compare/0.3.1...0.3.2)
 
 **Merged pull requests:**
 
+- Version bump 0.3.2 [\#41](https://github.com/ItinerisLtd/wp-hubspot-importer/pull/41) ([TangRufus](https://github.com/TangRufus))
 - Fix: `BlogPostRepo::getPostId\(\)` searches other `post\_status` [\#40](https://github.com/ItinerisLtd/wp-hubspot-importer/pull/40) ([TangRufus](https://github.com/TangRufus))
 
 ## [0.3.1](https://github.com/ItinerisLtd/wp-hubspot-importer/tree/0.3.1) (2019-06-13)
@@ -43,7 +61,6 @@
 - composer update [\#28](https://github.com/ItinerisLtd/wp-hubspot-importer/pull/28) ([TangRufus](https://github.com/TangRufus))
 - BlogPost: Add filters [\#27](https://github.com/ItinerisLtd/wp-hubspot-importer/pull/27) ([TangRufus](https://github.com/TangRufus))
 - Bump symfony/finder from 4.2.9 to 4.3.0 [\#26](https://github.com/ItinerisLtd/wp-hubspot-importer/pull/26) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
-- Bump symfony/console from 4.2.9 to 4.3.0 [\#25](https://github.com/ItinerisLtd/wp-hubspot-importer/pull/25) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
 - dependabot: Enable `automerged\_updates` [\#24](https://github.com/ItinerisLtd/wp-hubspot-importer/pull/24) ([TangRufus](https://github.com/TangRufus))
 - Bump phpstan/phpstan from 0.11.7 to 0.11.8 [\#23](https://github.com/ItinerisLtd/wp-hubspot-importer/pull/23) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
 - Bump symfony/contracts from 1.1.0 to 1.1.1 [\#22](https://github.com/ItinerisLtd/wp-hubspot-importer/pull/22) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
@@ -53,6 +70,7 @@
 
 **Merged pull requests:**
 
+- Bump symfony/console from 4.2.9 to 4.3.0 [\#25](https://github.com/ItinerisLtd/wp-hubspot-importer/pull/25) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
 - Version bump 0.2.0 [\#21](https://github.com/ItinerisLtd/wp-hubspot-importer/pull/21) ([TangRufus](https://github.com/TangRufus))
 - Fix `composer.json` [\#20](https://github.com/ItinerisLtd/wp-hubspot-importer/pull/20) ([TangRufus](https://github.com/TangRufus))
 - Add `post\_action\_pull-hubspot` [\#19](https://github.com/ItinerisLtd/wp-hubspot-importer/pull/19) ([TangRufus](https://github.com/TangRufus))
