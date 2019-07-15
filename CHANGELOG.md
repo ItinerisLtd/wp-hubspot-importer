@@ -1,10 +1,19 @@
 # Change Log
 
+## [0.4.1](https://github.com/ItinerisLtd/wp-hubspot-importer/tree/0.4.1) (2019-07-15)
+[Full Changelog](https://github.com/ItinerisLtd/wp-hubspot-importer/compare/0.4.0...0.4.1)
+
+**Merged pull requests:**
+
+- Fix version number [\#56](https://github.com/ItinerisLtd/wp-hubspot-importer/pull/56) ([TangRufus](https://github.com/TangRufus))
+- Importer: Add `wp\_hubspot\_importer\_importer\_what\_to\_do` filter [\#33](https://github.com/ItinerisLtd/wp-hubspot-importer/pull/33) ([TangRufus](https://github.com/TangRufus))
+
 ## [0.4.0](https://github.com/ItinerisLtd/wp-hubspot-importer/tree/0.4.0) (2019-07-15)
 [Full Changelog](https://github.com/ItinerisLtd/wp-hubspot-importer/compare/0.3.2...0.4.0)
 
 **Merged pull requests:**
 
+- Version bump 0.4.0 [\#54](https://github.com/ItinerisLtd/wp-hubspot-importer/pull/54) ([TangRufus](https://github.com/TangRufus))
 - composer update [\#53](https://github.com/ItinerisLtd/wp-hubspot-importer/pull/53) ([TangRufus](https://github.com/TangRufus))
 - \[Danger\] BlogPost: Unconditionally trust HubSpot post content [\#52](https://github.com/ItinerisLtd/wp-hubspot-importer/pull/52) ([TangRufus](https://github.com/TangRufus))
 - Bump phpstan/phpstan from 0.11.9 to 0.11.12 [\#50](https://github.com/ItinerisLtd/wp-hubspot-importer/pull/50) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
@@ -47,7 +56,6 @@
 **Merged pull requests:**
 
 - Version bump 0.2.2 [\#35](https://github.com/ItinerisLtd/wp-hubspot-importer/pull/35) ([TangRufus](https://github.com/TangRufus))
-- Importer: Add `wp\_hubspot\_importer\_importer\_what\_to\_do` filter [\#33](https://github.com/ItinerisLtd/wp-hubspot-importer/pull/33) ([TangRufus](https://github.com/TangRufus))
 - Bump phpstan/phpdoc-parser from 0.3.4 to 0.3.5 [\#32](https://github.com/ItinerisLtd/wp-hubspot-importer/pull/32) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
 - Bump symfony/finder from 4.3.0 to 4.3.1 [\#31](https://github.com/ItinerisLtd/wp-hubspot-importer/pull/31) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
 - Bump symfony/console from 4.3.0 to 4.3.1 [\#30](https://github.com/ItinerisLtd/wp-hubspot-importer/pull/30) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
@@ -61,6 +69,7 @@
 - composer update [\#28](https://github.com/ItinerisLtd/wp-hubspot-importer/pull/28) ([TangRufus](https://github.com/TangRufus))
 - BlogPost: Add filters [\#27](https://github.com/ItinerisLtd/wp-hubspot-importer/pull/27) ([TangRufus](https://github.com/TangRufus))
 - Bump symfony/finder from 4.2.9 to 4.3.0 [\#26](https://github.com/ItinerisLtd/wp-hubspot-importer/pull/26) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
+- Bump symfony/console from 4.2.9 to 4.3.0 [\#25](https://github.com/ItinerisLtd/wp-hubspot-importer/pull/25) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
 - dependabot: Enable `automerged\_updates` [\#24](https://github.com/ItinerisLtd/wp-hubspot-importer/pull/24) ([TangRufus](https://github.com/TangRufus))
 - Bump phpstan/phpstan from 0.11.7 to 0.11.8 [\#23](https://github.com/ItinerisLtd/wp-hubspot-importer/pull/23) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
 - Bump symfony/contracts from 1.1.0 to 1.1.1 [\#22](https://github.com/ItinerisLtd/wp-hubspot-importer/pull/22) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
@@ -70,7 +79,6 @@
 
 **Merged pull requests:**
 
-- Bump symfony/console from 4.2.9 to 4.3.0 [\#25](https://github.com/ItinerisLtd/wp-hubspot-importer/pull/25) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
 - Version bump 0.2.0 [\#21](https://github.com/ItinerisLtd/wp-hubspot-importer/pull/21) ([TangRufus](https://github.com/TangRufus))
 - Fix `composer.json` [\#20](https://github.com/ItinerisLtd/wp-hubspot-importer/pull/20) ([TangRufus](https://github.com/TangRufus))
 - Add `post\_action\_pull-hubspot` [\#19](https://github.com/ItinerisLtd/wp-hubspot-importer/pull/19) ([TangRufus](https://github.com/TangRufus))
