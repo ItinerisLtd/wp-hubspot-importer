@@ -24,11 +24,21 @@ class BlogPost
         );
     }
 
+    /**
+     * Post content getter.
+     *
+     * Danger! Unconditionally trust HubSpot because of client wants to embed iFrame, JS and other elements. Client
+     * panics when elements got stripped out. We have no time to whitelist those elements one by one.
+     *
+     * Whenever possible, `add_filter('wp_hubspot_importer_blog_post_post_content', 'wp_kses_post', PHP_INT_MIN);`.
+     *
+     * @return string
+     */
     public function getPostContent(): string
     {
         return (string) apply_filters(
             'wp_hubspot_importer_blog_post_post_content',
-            wp_kses_post($this->original->post_body ?? ''),
+            $this->original->post_body ?? '',
             $this
         );
     }
